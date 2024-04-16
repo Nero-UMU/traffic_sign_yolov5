@@ -5,9 +5,10 @@
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('./util/index.js'), require('./dom/event-handler.js'), require('./base-component.js')) :
-  typeof define === 'function' && define.amd ? define(['./util/index', './dom/event-handler', './base-component'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Button = factory(global.Index, global.EventHandler, global.BaseComponent));
-})(this, (function (index_js, EventHandler, BaseComponent) { 'use strict';
+    typeof define === 'function' && define.amd ? define(['./util/index', './dom/event-handler', './base-component'], factory) :
+      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Button = factory(global.Index, global.EventHandler, global.BaseComponent));
+})(this, (function (index_js, EventHandler, BaseComponent) {
+  'use strict';
 
   /**
    * --------------------------------------------------------------------------

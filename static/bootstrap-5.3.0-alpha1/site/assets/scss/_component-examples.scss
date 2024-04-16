@@ -30,64 +30,65 @@
     @include border-top-radius(var(--bs-border-radius));
   }
 
-  + .bd-code-snippet {
+  +.bd-code-snippet {
     @include border-top-radius(0);
     border: solid var(--bs-border-color);
     border-width: 0 1px 1px;
   }
 
-  + p {
+  +p {
     margin-top: 2rem;
   }
 
-  > .form-control {
-    + .form-control {
+  >.form-control {
+    +.form-control {
       margin-top: .5rem;
     }
   }
 
-  > .nav + .nav,
-  > .alert + .alert,
-  > .navbar + .navbar,
-  > .progress + .progress {
+  >.nav+.nav,
+  >.alert+.alert,
+  >.navbar+.navbar,
+  >.progress+.progress {
     margin-top: $spacer;
   }
 
-  > .dropdown-menu {
+  >.dropdown-menu {
     position: static;
     display: block;
   }
 
   > :last-child,
-  > nav:last-child .breadcrumb {
+  >nav:last-child .breadcrumb {
     margin-bottom: 0;
   }
 
-  > hr:last-child {
+  >hr:last-child {
     margin-bottom: $spacer;
   }
 
   // Images
-  > svg + svg,
-  > img + img {
+  >svg+svg,
+  >img+img {
     margin-left: .5rem;
   }
 
   // Buttons
-  > .btn,
-  > .btn-group {
+  >.btn,
+  >.btn-group {
     margin: .25rem .125rem;
   }
-  > .btn-toolbar + .btn-toolbar {
+
+  >.btn-toolbar+.btn-toolbar {
     margin-top: .5rem;
   }
 
   // List groups
-  > .list-group {
+  >.list-group {
     max-width: 400px;
   }
 
-  > [class*="list-group-horizontal"] {
+  >[class*="list-group-horizontal"] {
     max-width: 100%;
   }
 
@@ -116,16 +117,16 @@
 //
 
 .bd-example-row [class^="col"],
-.bd-example-cols [class^="col"] > *,
-.bd-example-cssgrid [class*="grid"] > * {
+.bd-example-cols [class^="col"]>*,
+.bd-example-cssgrid [class*="grid"]>* {
   padding-top: .75rem;
   padding-bottom: .75rem;
   background-color: rgba(var(--bd-violet-rgb), .15);
   border: 1px solid rgba(var(--bd-violet-rgb), .3);
 }
 
-.bd-example-row .row + .row,
-.bd-example-cssgrid .grid + .grid {
+.bd-example-row .row+.row,
+.bd-example-cssgrid .grid+.grid {
   margin-top: 1rem;
 }
 
@@ -182,13 +183,14 @@
     background-color: var(--bs-tertiary-bg);
     border: var(--bs-border-width) solid var(--bs-border-color);
 
-    > div {
+    >div {
       display: flex;
       align-items: center;
       justify-content: center;
     }
   }
 }
+
 .bd-example-ratios-breakpoint {
   .ratio-4x3 {
     width: 16rem;
@@ -224,6 +226,7 @@
 .custom-tooltip {
   --bs-tooltip-bg: var(--bs-primary);
 }
+
 // scss-docs-end custom-tooltip
 
 // scss-docs-start custom-popovers
@@ -235,6 +238,7 @@
   --bs-popover-body-padding-x: 1rem;
   --bs-popover-body-padding-y: .5rem;
 }
+
 // scss-docs-end custom-popovers
 
 // Scrollspy demo on fixed height div
@@ -313,7 +317,7 @@
 .bd-example-zindex-levels {
   min-height: 15rem;
 
-  > div {
+  >div {
     background-color: tint-color($bd-violet, 75%);
     border: 1px solid tint-color($bd-violet, 50%);
   }
@@ -322,14 +326,17 @@
     top: 3rem;
     left: 3rem;
   }
+
   > :nth-child(3) {
     top: 4.5rem;
     left: 4.5rem;
   }
+
   > :nth-child(4) {
     top: 6rem;
     left: 6rem;
   }
+
   > :nth-child(5) {
     top: 7.5rem;
     left: 7.5rem;

@@ -5,9 +5,10 @@
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('./sanitizer.js'), require('./index.js'), require('../dom/selector-engine.js'), require('./config.js')) :
-  typeof define === 'function' && define.amd ? define(['./sanitizer', './index', '../dom/selector-engine', './config'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.TemplateFactory = factory(global.Sanitizer, global.Index, global.SelectorEngine, global.Config));
-})(this, (function (sanitizer_js, index_js, SelectorEngine, Config) { 'use strict';
+    typeof define === 'function' && define.amd ? define(['./sanitizer', './index', '../dom/selector-engine', './config'], factory) :
+      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.TemplateFactory = factory(global.Sanitizer, global.Index, global.SelectorEngine, global.Config));
+})(this, (function (sanitizer_js, index_js, SelectorEngine, Config) {
+  'use strict';
 
   /**
    * --------------------------------------------------------------------------

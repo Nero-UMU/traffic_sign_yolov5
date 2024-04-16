@@ -68,13 +68,15 @@
     margin-top: var(--#{$prefix}dropdown-spacer);
   }
 
-  @if $dropdown-padding-y == 0 {
-    > .dropdown-item:first-child,
-    > li:first-child .dropdown-item {
+  @if $dropdown-padding-y ==0 {
+
+    >.dropdown-item:first-child,
+    >li:first-child .dropdown-item {
       @include border-top-radius(var(--#{$prefix}dropdown-inner-border-radius));
     }
-    > .dropdown-item:last-child,
-    > li:last-child .dropdown-item {
+
+    >.dropdown-item:last-child,
+    >li:last-child .dropdown-item {
       @include border-bottom-radius(var(--#{$prefix}dropdown-inner-border-radius));
     }
 
@@ -108,6 +110,7 @@
     }
   }
 }
+
 // scss-docs-end responsive-breakpoints
 
 // Allow for dropdowns to go bottom up (aka, dropup-menu)
@@ -136,6 +139,7 @@
 
   .dropdown-toggle {
     @include caret(end);
+
     &::after {
       vertical-align: 0;
     }
@@ -153,6 +157,7 @@
 
   .dropdown-toggle {
     @include caret(start);
+
     &::before {
       vertical-align: 0;
     }
@@ -180,7 +185,7 @@
   font-weight: $font-weight-normal;
   color: var(--#{$prefix}dropdown-link-color);
   text-align: inherit; // For `<button>`s
-  text-decoration: if($link-decoration == none, null, none);
+  text-decoration: if($link-decoration ==none, null, none);
   white-space: nowrap; // prevent links from randomly breaking onto new lines
   background-color: transparent; // For `<button>`s
   border: 0; // For `<button>`s
@@ -189,7 +194,7 @@
   &:hover,
   &:focus {
     color: var(--#{$prefix}dropdown-link-hover-color);
-    text-decoration: if($link-hover-decoration == underline, none, null);
+    text-decoration: if($link-hover-decoration ==underline, none, null);
     @include gradient-bg(var(--#{$prefix}dropdown-link-hover-bg));
   }
 

@@ -5,9 +5,10 @@
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('./util/index.js'), require('./dom/event-handler.js'), require('./dom/manipulator.js'), require('./dom/selector-engine.js'), require('./util/swipe.js'), require('./base-component.js')) :
-  typeof define === 'function' && define.amd ? define(['./util/index', './dom/event-handler', './dom/manipulator', './dom/selector-engine', './util/swipe', './base-component'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Carousel = factory(global.Index, global.EventHandler, global.Manipulator, global.SelectorEngine, global.Swipe, global.BaseComponent));
-})(this, (function (index_js, EventHandler, Manipulator, SelectorEngine, Swipe, BaseComponent) { 'use strict';
+    typeof define === 'function' && define.amd ? define(['./util/index', './dom/event-handler', './dom/manipulator', './dom/selector-engine', './util/swipe', './base-component'], factory) :
+      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Carousel = factory(global.Index, global.EventHandler, global.Manipulator, global.SelectorEngine, global.Swipe, global.BaseComponent));
+})(this, (function (index_js, EventHandler, Manipulator, SelectorEngine, Swipe, BaseComponent) {
+  'use strict';
 
   /**
    * --------------------------------------------------------------------------

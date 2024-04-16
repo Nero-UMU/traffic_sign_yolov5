@@ -55,7 +55,7 @@
 }
 
 .bs-popover-top {
-  > .popover-arrow {
+  >.popover-arrow {
     bottom: calc(-1 * (var(--#{$prefix}popover-arrow-height)) - var(--#{$prefix}popover-border-width)); // stylelint-disable-line function-disallowed-list
 
     &::before,
@@ -77,7 +77,7 @@
 
 /* rtl:begin:ignore */
 .bs-popover-end {
-  > .popover-arrow {
+  >.popover-arrow {
     left: calc(-1 * (var(--#{$prefix}popover-arrow-height)) - var(--#{$prefix}popover-border-width)); // stylelint-disable-line function-disallowed-list
     width: var(--#{$prefix}popover-arrow-height);
     height: var(--#{$prefix}popover-arrow-width);
@@ -102,7 +102,7 @@
 /* rtl:end:ignore */
 
 .bs-popover-bottom {
-  > .popover-arrow {
+  >.popover-arrow {
     top: calc(-1 * (var(--#{$prefix}popover-arrow-height)) - var(--#{$prefix}popover-border-width)); // stylelint-disable-line function-disallowed-list
 
     &::before,
@@ -136,7 +136,7 @@
 
 /* rtl:begin:ignore */
 .bs-popover-start {
-  > .popover-arrow {
+  >.popover-arrow {
     right: calc(-1 * (var(--#{$prefix}popover-arrow-height)) - var(--#{$prefix}popover-border-width)); // stylelint-disable-line function-disallowed-list
     width: var(--#{$prefix}popover-arrow-height);
     height: var(--#{$prefix}popover-arrow-width);
@@ -164,12 +164,15 @@
   &[data-popper-placement^="top"] {
     @extend .bs-popover-top;
   }
+
   &[data-popper-placement^="right"] {
     @extend .bs-popover-end;
   }
+
   &[data-popper-placement^="bottom"] {
     @extend .bs-popover-bottom;
   }
+
   &[data-popper-placement^="left"] {
     @extend .bs-popover-start;
   }

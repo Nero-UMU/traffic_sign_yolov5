@@ -3,6 +3,7 @@
 // Set the container width, and override it for fixed navbars in media queries.
 
 @if $enable-container-classes {
+
   // Single container class with breakpoint max-widths
   .container,
   // 100% wide container at all breakpoints
@@ -31,7 +32,7 @@
           }
 
           // Once the current breakpoint is reached, stop extending
-          @if ($breakpoint == $name) {
+          @if ($breakpoint ==$name) {
             $extend-breakpoint: false;
           }
         }

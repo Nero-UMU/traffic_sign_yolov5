@@ -1,11 +1,11 @@
 {{- /*
-  Usage: `scss-docs name="name" file="file/_location.scss"`
+Usage: `scss-docs name="name" file="file/_location.scss"`
 
-  Prints everything between `// scss-docs-start "name"` and `// scss-docs-end "name"`
-  comments in the docs.
+Prints everything between `// scss-docs-start "name"` and `// scss-docs-end "name"`
+comments in the docs.
 
-  Optional parameters:
-    * strip-default: Remove the ` !default` flag from variable assignments - default: `true`
+Optional parameters:
+* strip-default: Remove the ` !default` flag from variable assignments - default: `true`
 */ -}}
 
 {{- $name := .Get "name" -}}
@@ -14,30 +14,30 @@
 
 {{- /* If any parameters are missing, print an error and exit */ -}}
 {{- if or (not $name) (not $file) -}}
-  {{- errorf "%s: %q: Missing required parameters! Got: name=%q file=%q!" .Position .Name $name $file -}}
+{{- errorf "%s: %q: Missing required parameters! Got: name=%q file=%q!" .Position .Name $name $file -}}
 {{- else -}}
-  {{- $capture_start := printf "// scss-docs-start %s\n" $name -}}
-  {{- $capture_end := printf "// scss-docs-end %s" $name -}}
-  {{- $regex := printf `%s((?:.|\n)*)%s` $capture_start $capture_end -}}
+{{- $capture_start := printf "// scss-docs-start %s\n" $name -}}
+{{- $capture_end := printf "// scss-docs-end %s" $name -}}
+{{- $regex := printf `%s((?:.|\n)*)%s` $capture_start $capture_end -}}
 
-  {{- /*
-    TODO: figure out why we can't do the following and get the first group (the only capturing one)...
-    $regex := printf `(?:// scss-docs-start %s\n)((?:.|\n)*)(?:\n// scss-docs-end %s)` $name $name
-  */ -}}
+{{- /*
+TODO: figure out why we can't do the following and get the first group (the only capturing one)...
+$regex := printf `(?:// scss-docs-start %s\n)((?:.|\n)*)(?:\n// scss-docs-end %s)` $name $name
+*/ -}}
 
-  {{- $match := findRE $regex (readFile $file) -}}
-  {{- $match = index $match 0 -}}
+{{- $match := findRE $regex (readFile $file) -}}
+{{- $match = index $match 0 -}}
 
-  {{- if not $match -}}
-    {{- errorf "%s: %q: Got no matches for name=%q in file=%q!" .Position .Name $name $file -}}
-  {{- end -}}
+{{- if not $match -}}
+{{- errorf "%s: %q: Got no matches for name=%q in file=%q!" .Position .Name $name $file -}}
+{{- end -}}
 
-  {{- $match = replace $match $capture_start "" -}}
-  {{- $match = replace $match $capture_end "" -}}
+{{- $match = replace $match $capture_start "" -}}
+{{- $match = replace $match $capture_end "" -}}
 
-  {{- if (ne $strip_default "false") -}}
-    {{- $match = replace $match " !default" "" -}}
-  {{- end -}}
+{{- if (ne $strip_default "false") -}}
+{{- $match = replace $match " !default" "" -}}
+{{- end -}}
 
-  {{- highlight $match "scss" "" -}}
+{{- highlight $match "scss" "" -}}
 {{- end -}}

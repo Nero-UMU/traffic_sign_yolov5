@@ -426,7 +426,7 @@ describe('Util', () => {
   })
 
   describe('getjQuery', () => {
-    const fakejQuery = { trigger() {} }
+    const fakejQuery = { trigger() { } }
 
     beforeEach(() => {
       Object.defineProperty(window, 'jQuery', {

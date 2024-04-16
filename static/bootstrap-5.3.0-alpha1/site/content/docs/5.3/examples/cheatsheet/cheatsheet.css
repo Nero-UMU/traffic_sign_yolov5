@@ -17,7 +17,7 @@ body {
 }
 
 /* stylelint-disable-next-line selector-max-universal */
-.bd-heading + div > * + * {
+.bd-heading+div>*+* {
   margin-top: 3rem;
 }
 
@@ -69,7 +69,9 @@ body {
 }
 
 .bd-aside .btn[aria-expanded="true"]::before {
-  transform: rotate(90deg)/* rtl:ignore */;
+  transform: rotate(90deg)
+    /* rtl:ignore */
+  ;
 }
 
 
@@ -121,11 +123,13 @@ body {
   .bd-cheatsheet,
   .bd-cheatsheet section,
   .bd-cheatsheet article {
-    display: inherit; /* 1 */
+    display: inherit;
+    /* 1 */
     grid-template-rows: auto;
     grid-template-columns: 1fr 4fr;
     grid-column: 1 / span 2;
-    gap: inherit; /* 1 */
+    gap: inherit;
+    /* 1 */
   }
 
   .bd-aside {
@@ -134,12 +138,12 @@ body {
   }
 
   .bd-cheatsheet section,
-  .bd-cheatsheet section > h2 {
+  .bd-cheatsheet section>h2 {
     top: 2rem;
     scroll-margin-top: 2rem;
   }
 
-  .bd-cheatsheet section > h2::before {
+  .bd-cheatsheet section>h2::before {
     position: absolute;
     /* rtl:begin:ignore */
     top: 0;

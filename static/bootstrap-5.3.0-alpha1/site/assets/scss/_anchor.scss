@@ -12,8 +12,8 @@
 
   &:focus,
   &:hover,
-  :hover > &,
-  :target > & {
+  :hover>&,
+  :target>& {
     color: $link-color;
     text-decoration: none;
     opacity: 1;

@@ -93,7 +93,7 @@
       }
     }
 
-    @if not ($infix == "") {
+    @if not ($infix =="") {
       @include media-breakpoint-up($next) {
         --#{$prefix}offcanvas-height: auto;
         --#{$prefix}offcanvas-border-width: 0;

@@ -36,7 +36,7 @@
   list-style-type: none;
   counter-reset: section;
 
-  > .list-group-item::before {
+  >.list-group-item::before {
     // Increments only this instance of the section counter
     content: counters(section, ".") ". ";
     counter-increment: section;
@@ -77,7 +77,7 @@
   display: block;
   padding: var(--#{$prefix}list-group-item-padding-y) var(--#{$prefix}list-group-item-padding-x);
   color: var(--#{$prefix}list-group-color);
-  text-decoration: if($link-decoration == none, null, none);
+  text-decoration: if($link-decoration ==none, null, none);
   background-color: var(--#{$prefix}list-group-bg);
   border: var(--#{$prefix}list-group-border-width) solid var(--#{$prefix}list-group-border-color);
 
@@ -105,7 +105,7 @@
   }
 
   // stylelint-disable-next-line scss/selector-no-redundant-nesting-selector
-  & + .list-group-item {
+  &+.list-group-item {
     border-top-width: 0;
 
     &.active {
@@ -126,7 +126,7 @@
     .list-group-horizontal#{$infix} {
       flex-direction: row;
 
-      > .list-group-item {
+      >.list-group-item {
         &:first-child:not(:last-child) {
           @include border-bottom-start-radius(var(--#{$prefix}list-group-border-radius));
           @include border-top-end-radius(0);
@@ -141,7 +141,7 @@
           margin-top: 0;
         }
 
-        + .list-group-item {
+        +.list-group-item {
           border-top-width: var(--#{$prefix}list-group-border-width);
           border-left-width: 0;
 
@@ -164,7 +164,7 @@
 .list-group-flush {
   @include border-radius(0);
 
-  > .list-group-item {
+  >.list-group-item {
     border-width: 0 0 var(--#{$prefix}list-group-border-width);
 
     &:last-child {
@@ -187,6 +187,7 @@
     --#{$prefix}list-group-border-color: var(--#{$prefix}#{$state}-border-subtle);
 
     &.list-group-item-action {
+
       &:hover,
       &:focus {
         --#{$prefix}list-group-action-hover-color: var(--#{$prefix}emphasis-color);
@@ -201,4 +202,5 @@
     }
   }
 }
+
 // scss-docs-end list-group-modifiers

@@ -26,28 +26,31 @@
   border-bottom: $width solid transparent;
 }
 
-@mixin caret(
-  $direction: down,
+@mixin caret($direction: down,
   $width: $caret-width,
   $spacing: $caret-spacing,
-  $vertical-align: $caret-vertical-align
-) {
+  $vertical-align: $caret-vertical-align) {
   @if $enable-caret {
     &::after {
       display: inline-block;
       margin-left: $spacing;
       vertical-align: $vertical-align;
       content: "";
-      @if $direction == down {
+
+      @if $direction ==down {
         @include caret-down($width);
-      } @else if $direction == up {
+      }
+
+      @else if $direction ==up {
         @include caret-up($width);
-      } @else if $direction == end {
+      }
+
+      @else if $direction ==end {
         @include caret-end($width);
       }
     }
 
-    @if $direction == start {
+    @if $direction ==start {
       &::after {
         display: none;
       }
@@ -66,4 +69,5 @@
     }
   }
 }
+
 // scss-docs-end caret-mixins

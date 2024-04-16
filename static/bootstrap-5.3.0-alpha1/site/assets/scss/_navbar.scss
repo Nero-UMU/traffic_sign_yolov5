@@ -94,7 +94,7 @@
     @include border-radius(.5rem);
     box-shadow: $dropdown-box-shadow;
 
-    li + li {
+    li+li {
       margin-top: .125rem;
     }
 

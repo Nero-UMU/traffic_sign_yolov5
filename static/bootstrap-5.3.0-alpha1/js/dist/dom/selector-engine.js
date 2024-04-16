@@ -5,9 +5,10 @@
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('../util/index.js')) :
-  typeof define === 'function' && define.amd ? define(['../util/index'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.SelectorEngine = factory(global.Index));
-})(this, (function (index_js) { 'use strict';
+    typeof define === 'function' && define.amd ? define(['../util/index'], factory) :
+      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.SelectorEngine = factory(global.Index));
+})(this, (function (index_js) {
+  'use strict';
 
   /**
    * --------------------------------------------------------------------------

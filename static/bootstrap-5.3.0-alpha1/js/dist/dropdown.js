@@ -5,9 +5,10 @@
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@popperjs/core'), require('./util/index.js'), require('./dom/event-handler.js'), require('./dom/manipulator.js'), require('./dom/selector-engine.js'), require('./base-component.js')) :
-  typeof define === 'function' && define.amd ? define(['@popperjs/core', './util/index', './dom/event-handler', './dom/manipulator', './dom/selector-engine', './base-component'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Dropdown = factory(global["@popperjs/core"], global.Index, global.EventHandler, global.Manipulator, global.SelectorEngine, global.BaseComponent));
-})(this, (function (Popper, index_js, EventHandler, Manipulator, SelectorEngine, BaseComponent) { 'use strict';
+    typeof define === 'function' && define.amd ? define(['@popperjs/core', './util/index', './dom/event-handler', './dom/manipulator', './dom/selector-engine', './base-component'], factory) :
+      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Dropdown = factory(global["@popperjs/core"], global.Index, global.EventHandler, global.Manipulator, global.SelectorEngine, global.BaseComponent));
+})(this, (function (Popper, index_js, EventHandler, Manipulator, SelectorEngine, BaseComponent) {
+  'use strict';
 
   function _interopNamespaceDefault(e) {
     const n = Object.create(null, { [Symbol.toStringTag]: { value: 'Module' } });

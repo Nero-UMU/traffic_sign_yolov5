@@ -5,9 +5,10 @@
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@popperjs/core'), require('./util/index.js'), require('./util/sanitizer.js'), require('./dom/event-handler.js'), require('./dom/manipulator.js'), require('./base-component.js'), require('./util/template-factory.js')) :
-  typeof define === 'function' && define.amd ? define(['@popperjs/core', './util/index', './util/sanitizer', './dom/event-handler', './dom/manipulator', './base-component', './util/template-factory'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Tooltip = factory(global["@popperjs/core"], global.Index, global.Sanitizer, global.EventHandler, global.Manipulator, global.BaseComponent, global.TemplateFactory));
-})(this, (function (Popper, index_js, sanitizer_js, EventHandler, Manipulator, BaseComponent, TemplateFactory) { 'use strict';
+    typeof define === 'function' && define.amd ? define(['@popperjs/core', './util/index', './util/sanitizer', './dom/event-handler', './dom/manipulator', './base-component', './util/template-factory'], factory) :
+      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Tooltip = factory(global["@popperjs/core"], global.Index, global.Sanitizer, global.EventHandler, global.Manipulator, global.BaseComponent, global.TemplateFactory));
+})(this, (function (Popper, index_js, sanitizer_js, EventHandler, Manipulator, BaseComponent, TemplateFactory) {
+  'use strict';
 
   function _interopNamespaceDefault(e) {
     const n = Object.create(null, { [Symbol.toStringTag]: { value: 'Module' } });

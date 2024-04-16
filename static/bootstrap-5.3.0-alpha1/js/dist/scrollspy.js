@@ -5,9 +5,10 @@
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('./util/index.js'), require('./dom/event-handler.js'), require('./dom/selector-engine.js'), require('./base-component.js')) :
-  typeof define === 'function' && define.amd ? define(['./util/index', './dom/event-handler', './dom/selector-engine', './base-component'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Scrollspy = factory(global.Index, global.EventHandler, global.SelectorEngine, global.BaseComponent));
-})(this, (function (index_js, EventHandler, SelectorEngine, BaseComponent) { 'use strict';
+    typeof define === 'function' && define.amd ? define(['./util/index', './dom/event-handler', './dom/selector-engine', './base-component'], factory) :
+      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Scrollspy = factory(global.Index, global.EventHandler, global.SelectorEngine, global.BaseComponent));
+})(this, (function (index_js, EventHandler, SelectorEngine, BaseComponent) {
+  'use strict';
 
   /**
    * --------------------------------------------------------------------------

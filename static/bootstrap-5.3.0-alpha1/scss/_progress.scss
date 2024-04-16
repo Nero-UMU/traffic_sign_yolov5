@@ -3,9 +3,12 @@
 // scss-docs-start progress-keyframes
 @if $enable-transitions {
   @keyframes progress-bar-stripes {
-    0% { background-position-x: $progress-height; }
+    0% {
+      background-position-x: $progress-height;
+    }
   }
 }
+
 // scss-docs-end progress-keyframes
 
 .progress,
@@ -47,11 +50,11 @@
   background-size: var(--#{$prefix}progress-height) var(--#{$prefix}progress-height);
 }
 
-.progress-stacked > .progress {
+.progress-stacked>.progress {
   overflow: visible;
 }
 
-.progress-stacked > .progress > .progress-bar {
+.progress-stacked>.progress>.progress-bar {
   width: 100%;
 }
 

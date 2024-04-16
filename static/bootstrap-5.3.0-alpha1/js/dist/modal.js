@@ -5,9 +5,10 @@
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('./util/index.js'), require('./dom/event-handler.js'), require('./dom/selector-engine.js'), require('./util/scrollbar.js'), require('./base-component.js'), require('./util/backdrop.js'), require('./util/focustrap.js'), require('./util/component-functions.js')) :
-  typeof define === 'function' && define.amd ? define(['./util/index', './dom/event-handler', './dom/selector-engine', './util/scrollbar', './base-component', './util/backdrop', './util/focustrap', './util/component-functions'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Modal = factory(global.Index, global.EventHandler, global.SelectorEngine, global.Scrollbar, global.BaseComponent, global.Backdrop, global.Focustrap, global.ComponentFunctions));
-})(this, (function (index_js, EventHandler, SelectorEngine, ScrollBarHelper, BaseComponent, Backdrop, FocusTrap, componentFunctions_js) { 'use strict';
+    typeof define === 'function' && define.amd ? define(['./util/index', './dom/event-handler', './dom/selector-engine', './util/scrollbar', './base-component', './util/backdrop', './util/focustrap', './util/component-functions'], factory) :
+      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Modal = factory(global.Index, global.EventHandler, global.SelectorEngine, global.Scrollbar, global.BaseComponent, global.Backdrop, global.Focustrap, global.ComponentFunctions));
+})(this, (function (index_js, EventHandler, SelectorEngine, ScrollBarHelper, BaseComponent, Backdrop, FocusTrap, componentFunctions_js) {
+  'use strict';
 
   /**
    * --------------------------------------------------------------------------

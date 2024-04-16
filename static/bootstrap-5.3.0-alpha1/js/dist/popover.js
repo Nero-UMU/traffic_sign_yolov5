@@ -5,9 +5,10 @@
   */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('./util/index.js'), require('./tooltip.js')) :
-  typeof define === 'function' && define.amd ? define(['./util/index', './tooltip'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Popover = factory(global.Index, global.Tooltip));
-})(this, (function (index_js, Tooltip) { 'use strict';
+    typeof define === 'function' && define.amd ? define(['./util/index', './tooltip'], factory) :
+      (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Popover = factory(global.Index, global.Tooltip));
+})(this, (function (index_js, Tooltip) {
+  'use strict';
 
   /**
    * --------------------------------------------------------------------------
