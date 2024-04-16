@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+<!DOCTYPE html>
+<html>
+{% block css %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demo</title>
+    <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+    <link href="/static/layui/layui/css/layui.css" rel="stylesheet">
+</head>
+{% endblock %}
+
+<body>
+    {% block content %}
+    <!-- 给容器追加 class="layui-form-pane"，即可显示为方框风格 -->
+    <form class="layui-form layui-form-pane" action="/update/" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px;">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" autocomplete="off" placeholder="请输入当前账户的用户名" lay-verify="required"
+                    class="layui-input" value="{{ my_info.name }}" style="width: 400px;">
+            </div>
+        </div>
+        <div class=" layui-form-item">
+            <label class="layui-form-label" style="width: 200px;">手机号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="tel" autocomplete="off" placeholder="请输入当前账户的手机号码" lay-verify="required"
+                    class="layui-input" style="width: 400px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px;">当前密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="old_password" placeholder="请输入当前密码" lay-verify="required"
+                    autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-text-em">请务必填写用户名</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px;">新密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password" placeholder="请输入" lay-verify="required" autocomplete="off"
+                    class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px;">请再次输入新密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password1" placeholder="请输入" lay-verify="required" autocomplete="off"
+                    class="layui-input">
+            </div>
+        </div>
+        <input type="hidden" name="type" value="1">
+        <div class="layui-form-item" style="position: relative; left:100px">
+            <button class="layui-btn" lay-submit style="width: 200px;">修改密码</button>
+            <button type="reset" class="layui-btn layui-btn-primary" style="width: 200px;">重置</button>
+        </div>
+        {% endblock %}
+    </form>
+
+    <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+    {% block js %}
+    <script src="/static/layui/layui/layui.js"></script>
+    <script>
+        if ("{{ msg }}" != "") {
+            alert("{{ msg}}")
+        }
+    </script>
+    {% endblock %}
+</body>
+
+</html>

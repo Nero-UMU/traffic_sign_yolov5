@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+<!DOCTYPE html>
+<html>
+{% block css %}
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Demo</title>
+
+    <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+
+    <link href="/static/layui/layui/css/layui.css" rel="stylesheet">
+</head>
+{% endblock %}
+
+<body>
+    {% block content %}
+
+    <table class="layui-table" lay-even style="width: 500px; margin: 50px auto ;">
+
+        <colgroup>
+
+            <col width="200">
+
+            <col width="300">
+
+            <col>
+
+        </colgroup>
+        <tr>
+            <th>表头</th>
+            <td>信息</td>
+        </tr>
+        <tr>
+            <th>用户ID</th>
+            <td>{{ my_info.id }}</td>
+        </tr>
+        <tr>
+            <th>用户名</th>
+            <td>{{ my_info.name }}</td>
+        </tr>
+        <tr>
+            <th>密码的md5值</th>
+            <td>{{ my_info.password }}</td>
+        </tr>
+        <tr>
+            <th>电话号码</th>
+            <td>{{ my_info.tel }}</td>
+        </tr>
+        <tr>
+            <th>性别</th>
+            <td>{% if my_info.gender %}男{% else %}女{% endif %}</td>
+        </tr>
+        <tr>
+            <th>年龄</th>
+            <td>{{ my_info.age }}</td>
+        </tr>
+        <tr>
+            <th>家庭住址</th>
+            <td>{{ my_info.address }}</td>
+        </tr>
+        <tr>
+            <th>邮箱</th>
+            <td>{{ my_info.email }}</td>
+        </tr>
+        <tr>
+            <th>个性签名</th>
+            <td>{{ my_info.words }}</td>
+        </tr>
+    </table>
+    <a href="/update" style="position: relative; left:60%"><button type="button" class="layui-btn layui-btn-normal layui-btn-radius">修改信息/密码</button></a
+    {% endblock %}
+
+</body>
+
+</html>

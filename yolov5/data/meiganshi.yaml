@@ -1,0 +1,10 @@
+# train and val data as 1) directory: path/images/, 2) file: path/images.txt, or 3) list: [path1/images/, path2/images/]
+train: /home/nero/yolov5-7.0/data/images/train  # 128 images
+val: /home/nero/yolov5-7.0/data/images/val  # 128 images
+
+# number of classes
+nc: 2
+# class names
+names:
+  0: mei
+  1: ganshi
