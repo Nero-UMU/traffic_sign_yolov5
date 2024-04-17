@@ -29,7 +29,7 @@ def login(request):
         md5 = hashlib.md5()
         md5.update(pwd.encode('utf-8'))
         pwd = md5.hexdigest()
-        print("用户名 ",name, "密码的md5值 ", pwd)
+        print("用户名 ",name, "\n密码的md5值 ", pwd)
         if User.objects.filter(name=name, password=pwd):
             obj = redirect('/')
             obj.set_cookie('uid', User.objects.filter(name=name, password=pwd)[0].id, max_age=60 * 60 * 24)
@@ -38,7 +38,11 @@ def login(request):
             msg = "用户信息错误，请重新输入！！"
             return render(request, 'login.html', {"msg":msg})
     else:
-        return render(request, 'login.html', locals())
+        uid = int(request.COOKIES.get('uid', -1))
+        if uid != -1:
+            return redirect('/')
+        else:
+            return render(request, 'login.html', locals())
 
 # 注销
 def logout(request):
@@ -77,7 +81,7 @@ class register(View):
             md5.update(pwd.encode('utf-8'))
             pwd = md5.hexdigest()
             User.objects.create(name=name, tel=tel, password=pwd)
-            print("用户名 ",name, "电话号码 ", tel, "密码的md5值 ", pwd)
+            print("用户名 ",name, "\n电话号码 ", tel, "\n密码的md5值 ", pwd)
             msg = "注册成功!"
             return render(request, 'login.html', {"msg":msg})
         
@@ -108,8 +112,7 @@ def predict_img_label(image_path):
     print("yolov5的路径为 "+yolo5_dir)
     
     result = {}
-    os.chdir(yolo5_dir)
-    cmd = f'python3 detect.py --weights meiyanshi.engine --source {image_path} --device 0 --data data/meiganshi.yaml'
+    cmd = f'python3 {yolo5_dir}/detect.py --weights {yolo5_dir}/meiyanshi.engine --source {image_path} --device 0 --data {yolo5_dir}/data/meiganshi.yaml'
     
     os.system(cmd)
     # 若识别到了物体，则继续进行
@@ -132,13 +135,11 @@ def predict_img_label(image_path):
     filename = os.path.join(yolo5_dir,"runs","detect",f"exp{exps}",f"{filename}.json")
     if os.path.exists(filename):
         result = json.load(open(filename,"r"))
-        os.chdir(current_dir)
         # 返回Json文件和识别后的文件路径
         print("识别后的文件路径为 "+filename[:-5])
         return result, filename[:-5]
     # 若未识别到物体，则返回False
     else:
-        os.chdir(current_dir)
         return False, False
     
     
@@ -216,9 +217,6 @@ class update(View):
             if name != my_info.name:
                 msg = "不可修改他人密码！"
                 
-            elif not re.search(r"^\d{11}$", tel) :
-                msg = "请填入正确的手机号码！"
-            
             elif not User.objects.filter(id=uid, tel=tel):
                 msg = "当前账户手机号码错误！"
             
@@ -239,4 +237,21 @@ class update(View):
                 
                 User.objects.filter(id=uid).update(name=name,password=pwd)
                 return redirect("/logout/")
-        return render(request, "update.html", locals())
+            
+            return render(request, "update.html", locals())
+            
+        elif int(work_type)==2:
+            name = request.POST.get('name')
+            tel = request.POST.get('tel')
+            gender = request.POST.get('gender')
+            age = request.POST.get('age')
+            addr1 = request.POST.get('addr1')
+            addr2 = request.POST.get('addr2')
+            addr3 = request.POST.get('addr3')
+            address = request.POST.get('address')
+            email = request.POST.get('email')
+            words = request.POST.get('words')
+            
+            address = addr1 + addr2 + addr3 + address
+            User.objects.filter(id=uid).update(name=name, tel=tel, gender=gender,age=age,address=address,email=email,words=words)
+            return render(request, "me.html",locals())

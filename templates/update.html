@@ -10,12 +10,18 @@
     <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
     <link href="/static/layui/layui/css/layui.css" rel="stylesheet">
 </head>
-{% endblock %}
+{% endblock css %}
 
 <body>
     {% block content %}
     <!-- 给容器追加 class="layui-form-pane"，即可显示为方框风格 -->
-    <form class="layui-form layui-form-pane" action="/update/" method="post">
+    <form class="layui-form layui-form-pane" action="/update/" method="post"
+        style="position: relative; left:20%; margin: 50px;width:800px">
+        <div class="layui-panel" style="width: 300px; margin: 20px; position:relative; left:10%;">
+
+            <div style="padding: 20px;background:#16b777; color:#23292e; font-size:large;">密码修改</div>
+
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 200px;">用户名</label>
             <div class="layui-input-block">
@@ -26,7 +32,7 @@
         <div class=" layui-form-item">
             <label class="layui-form-label" style="width: 200px;">手机号码</label>
             <div class="layui-input-block">
-                <input type="text" name="tel" autocomplete="off" placeholder="请输入当前账户的手机号码" lay-verify="required"
+                <input type="text" name="tel" autocomplete="off" placeholder="请输入当前账户的手机号码" lay-verify="required|phone"
                     class="layui-input" style="width: 400px;">
             </div>
         </div>
@@ -57,18 +63,137 @@
             <button class="layui-btn" lay-submit style="width: 200px;">修改密码</button>
             <button type="reset" class="layui-btn layui-btn-primary" style="width: 200px;">重置</button>
         </div>
-        {% endblock %}
+
     </form>
 
-    <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
-    {% block js %}
-    <script src="/static/layui/layui/layui.js"></script>
-    <script>
-        if ("{{ msg }}" != "") {
-            alert("{{ msg}}")
-        }
-    </script>
-    {% endblock %}
+
+    <hr class="layui-border-cyan">
+
+
+    <form class="layui-form" action="/update/" method="post" style="position:relative; left:20%; width:800px;">
+        <input type="hidden" name="type" value="2">
+
+        <div class="layui-panel" style="width: 300px; margin: 20px; position:relative; left:10%;">
+            <div style="padding: 20px;background:#16b777; color:#23292e; font-size:large;">个人信息修改</div>
+        </div>
+
+        <div class="layui-form-item" style="width: 800px;">
+            <label class="layui-form-label" style="width: 100px;">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" placeholder="修改用户名" autocomplete="off" class="layui-input"
+                    lay-verify="required" value="{{ my_info.name }}">
+            </div>
+        </div>
+
+        <div class=" layui-form-item" style="width: 800px;">
+            <label class="layui-form-label" style="width: 100px;">手机号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="tel" autocomplete="off" placeholder="请输入当前账户的手机号码" lay-verify="required|phone"
+                    class="layui-input" value="{{ my_info.tel }}">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="width: 800px;">
+            <label class="layui-form-label" style="width: 100px;">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" {% ifequal my_info.gender 1 %}checked{% endifequal %} name="gender" value="1"
+                    title="男">
+                <input type="radio" {% ifequal my_info.gender 0 %}checked{% endifequal %} name="gender" value="0"
+                    title="女">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="width: 800px;">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 100px;">年龄</label>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="number" name="age" placeholder="0" autocomplete="off" class="layui-input" min="0"
+                        step="1" lay-affix="number" value="{{ my_info.age }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="width: 800px;">
+            <label class="layui-form-label" style="width: 100px;">家庭住址</label>
+            <div class="layui-input-inline">
+                <select name="addr1">
+                    <option value="江西省" selected>江西</option>
+                    <option value="浙江省">浙江</option>
+                    <option value="福建省">福建</option>
+                    <option value="湖北省">湖北</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select name="addr2">
+                    <option value="九江市" selected>九江</option>
+                    <option value="南昌市">南昌</option>
+                    <option value="北京市">北京</option>
+                    <option value="武汉市">武汉</option>
+                    <option value="杭州市">杭州</option>
+                    <option value="宁波市">宁波</option>
+                    <option value="温州市">温州</option>
+                    <option value="台州市">台州</option>
+                    <option value="绍兴市">绍兴</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select name="addr3">
+                    <option value="濂溪区" selected>濂溪区</option>
+                    <option value="雄安新区">雄安新区</option>
+                    <option value="柴桑区">柴桑区</option>
+                    <option value="西湖区">西湖区</option>
+                    <option value="余杭区">余杭区</option>
+                    <option value="拱墅区">拱墅区</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="width: 800px;">
+            <label class="layui-form-label" style="width: 100px;">详细地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="address" placeholder="详细地址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="width: 800px;">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 100px;">邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" style="width: 500px;" lay-verify="email" placeholder="邮箱地址"
+                        autocomplete="off" class="layui-input" value="{{ my_info.email }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label" style="width: 100px;">个性签名</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入个性签名" name="words" class="layui-textarea"
+                    style="width: 800px;">{{my_info.words}}</textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="demo1"
+                    style="width: 200px;">个人信息修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary" style="width: 200px;">重置</button>
+            </div>
+        </div>
+    </form>
+
 </body>
 
 </html>
+{% endblock content %}
+
+
+{% block js %}
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="/static/layui/layui/layui.js"></script>
+<script>
+    if ("{{ msg }}" != "") {
+        alert("{{ msg }}")
+    }
+</script>
+{% endblock js %}
