@@ -278,14 +278,20 @@ class detectionResault(View):
         questionId = request.POST.get('questionId')
         
         # 正确答案
-        correct_answer = QuestionBank.objects.filter(id=questionId)[0].correct
-        # 题目
-        question = QuestionBank.objects.filter(id=questionId)[0].question
+        correct = QuestionBank.objects.filter(id=questionId)[0].correct
+        # 题目实例
+        question = QuestionBank(id=questionId)
+        # 用户实例
+        user = User(id=uid)
+        # 答题情况
+        correct_or_not = int(correct == select)
+        # 用户回答
+        answer = select
         
-        user = User.objects.filter(id=uid)
-        
-        print(correct_answer)
-        print(question)
-        
+        QuestionResult.objects.create(user=user,question=question,answer=answer,correct=correct,correct_or_not=correct_or_not)
         return render(request, "detectionResault.html", locals())
+    @method_decorator(check_login)
+    def get(self, request):
+        return render(request, "detectionResault.html", locals())
+        
         
