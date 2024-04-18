@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block css %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> {% block title %} 小测试 {% endblock %}</title>
+    <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+    <link href="/static/layui/layui/css/layui.css" rel="stylesheet">
+</head>
+
+{% endblock %}
+
+
+{% block content %}
+
+<form style="position: relative; left:20%; top: 40px;width: 800px;" method="post" action="/detectionResault/">
+    <input type="hidden" name="questionId" value="{{ question.id }}">
+    <blockquote class="layui-elem-quote" style="font-size:30px;">
+        交通指示小测试
+    </blockquote>
+    <div class="layui-panel" style=" word-wrap: break-word;">
+        <div style="padding: 32px; height:5px;font-size:22px;">题目ID:{{question.id}}<br></div>
+        <div style="padding: 32px; height:200px;font-size:32px;">题目:{{ question }}</div>
+    </div>
+    <div class="layui-form layui-row layui-col-space16" style="width: auto;position:relative;top: 10px;">
+        <div class="layui-col-md6">
+            <select name="select">
+                <option value="A" selected>{{ question.a }}</option>
+                <option value="B">{{ question.b }}</option>
+                <option value="C">{{ question.c}}</option>
+                <option value="D">{{ question.d }}</option>
+            </select>
+        </div>
+    </div>
+    <button class="layui-btn layui-btn-lg" type="submit" style="position: relative; left:40%;">提交</button>
+</form>
+
+{% endblock %}

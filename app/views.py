@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render, redirect, HttpResponse
 from django.views import View
 import os, json
@@ -255,3 +256,36 @@ class update(View):
             address = addr1 + addr2 + addr3 + address
             User.objects.filter(id=uid).update(name=name, tel=tel, gender=gender,age=age,address=address,email=email,words=words)
             return render(request, "me.html",locals())
+        
+        
+class detection(View):
+    @method_decorator(check_login)
+    def get(self, request):
+        uid = int(request.COOKIES.get('uid', -1))
+        username = User.objects.filter(id=uid)[0].name
+        questionId_all = [i.id for i in QuestionBank.objects.all()]
+        # 随机抽取1个题目到一个数组中
+        questionId = random.sample(questionId_all , 1)
+        question = QuestionBank.objects.filter(id__in=questionId)[0]
+        return render(request, "detection.html", locals())
+
+class detectionResault(View):
+    @method_decorator(check_login)
+    def post(self, request):
+        uid = int(request.COOKIES.get('uid', -1))
+        username = User.objects.filter(id=uid)[0].name
+        select = request.POST.get('select')
+        questionId = request.POST.get('questionId')
+        
+        # 正确答案
+        correct_answer = QuestionBank.objects.filter(id=questionId)[0].correct
+        # 题目
+        question = QuestionBank.objects.filter(id=questionId)[0].question
+        
+        user = User.objects.filter(id=uid)
+        
+        print(correct_answer)
+        print(question)
+        
+        return render(request, "detectionResault.html", locals())
+        

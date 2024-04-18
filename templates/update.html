@@ -1,19 +1,16 @@
 {% extends "layout.html" %}
-<!DOCTYPE html>
-<html>
 {% block css %}
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Demo</title>
+    <title> {% block title %} 修改信息 {% endblock %}</title>
     <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
     <link href="/static/layui/layui/css/layui.css" rel="stylesheet">
 </head>
 {% endblock css %}
-
+{% block content %}
 <body>
-    {% block content %}
+  
     <!-- 给容器追加 class="layui-form-pane"，即可显示为方框风格 -->
     <form class="layui-form layui-form-pane" action="/update/" method="post"
         style="position: relative; left:20%; margin: 50px;width:800px">
@@ -78,7 +75,7 @@
         </div>
 
         <div class="layui-form-item" style="width: 800px;">
-            <label class="layui-form-label" style="width: 100px;">用户名</label>
+            <label class="layui-form-label" style="width: 80px;">用户名</label>
             <div class="layui-input-block">
                 <input type="text" name="name" placeholder="修改用户名" autocomplete="off" class="layui-input"
                     lay-verify="required" value="{{ my_info.name }}">
@@ -86,7 +83,7 @@
         </div>
 
         <div class=" layui-form-item" style="width: 800px;">
-            <label class="layui-form-label" style="width: 100px;">手机号码</label>
+            <label class="layui-form-label" style="width: 80px;">手机号码</label>
             <div class="layui-input-block">
                 <input type="text" name="tel" autocomplete="off" placeholder="请输入当前账户的手机号码" lay-verify="required|phone"
                     class="layui-input" value="{{ my_info.tel }}">
@@ -149,7 +146,7 @@
         </div>
 
         <div class="layui-form-item" style="width: 800px;">
-            <label class="layui-form-label" style="width: 100px;">详细地址</label>
+            <label class="layui-form-label" style="width: 80px;">详细地址</label>
             <div class="layui-input-block">
                 <input type="text" name="address" placeholder="详细地址" autocomplete="off" class="layui-input">
             </div>
@@ -166,7 +163,7 @@
         </div>
 
         <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label" style="width: 100px;">个性签名</label>
+            <label class="layui-form-label" style="width: 80px;">个性签名</label>
             <div class="layui-input-block">
                 <textarea placeholder="请输入个性签名" name="words" class="layui-textarea"
                     style="width: 800px;">{{my_info.words}}</textarea>
@@ -187,10 +184,8 @@
 </html>
 {% endblock content %}
 
-
 {% block js %}
 <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
-<script src="/static/layui/layui/layui.js"></script>
 <script>
     if ("{{ msg }}" != "") {
         alert("{{ msg }}")

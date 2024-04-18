@@ -141,3 +141,10 @@ SIMPLEUI_LOGO = '/static/jju_logo.png'
 
 SIMPLEUI_HOME_INFO = False 
 SIMPLEUI_ANALYSIS = False 
+
+SIMPLEUI_ICON = {
+    '用户表': 'fa-brands fa-github',
+    '题库': 'fa-solid fa-question',
+    '交通标志识别系统管理': 'fa-brands fa-app-store-ios',
+    '答题结果': 'fa-solid fa-check',
+}

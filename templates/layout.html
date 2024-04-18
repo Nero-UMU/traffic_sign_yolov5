@@ -1,119 +1,47 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.108.0">
-    <title> {% block title %} 交通标志识别 {% endblock %}</title>
-
-
-
-    <link href="/static/bootstrap-5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-
-        .b-example-divider {
-            height: 3rem;
-            background-color: rgba(0, 0, 0, .1);
-            border: solid rgba(0, 0, 0, .15);
-            border-width: 1px 0;
-            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-        }
-
-        .b-example-vr {
-            flex-shrink: 0;
-            width: 1.5rem;
-            height: 100vh;
-        }
-
-        .bi {
-            vertical-align: -.125em;
-            fill: currentColor;
-        }
-
-        .nav-scroller {
-            position: relative;
-            z-index: 2;
-            height: 2.75rem;
-            overflow-y: hidden;
-        }
-
-        .nav-scroller .nav {
-            display: flex;
-            flex-wrap: nowrap;
-            padding-bottom: 1rem;
-            margin-top: -1px;
-            overflow-x: auto;
-            text-align: center;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-        }
-    </style>
-    {% block css %}{% endblock %}
-
-    <!-- Custom styles for this template -->
-    <link href="/static/css/navbar-fixed.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <title> {% block title %} 交通标志识别 {% endblock %}</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/static/layui/layui/css/layui.css" rel="stylesheet">
+  {% block css %}{% endblock %}
 </head>
 
 <body>
+  <ul class="layui-nav layui-nav-tree layui-nav-side">
+    <li class="layui-nav-item"><a href="/">主页</a></li>
+    <li class="layui-nav-item layui-nav-itemed">
+      <a href="javascript:;">页面跳转</a>
+      <dl class="layui-nav-child">
+        <dd><a href="/predict">图片预测</a><span class="layui-badge-dot layui-bg-blue"></span></dd>
+        <dd><a href="/detection">小测试</a><span class="layui-badge-dot layui-bg-green"></span></dd>
+      </dl>
+    </li>
+    <li class="layui-nav-item">
+      <a href="javascript:;">用户管理</a>
+      <dl class="layui-nav-child">
+        <dd><a href="/me">个人信息</a><span class="layui-badge-dot layui-bg-cyan"></span></dd>
+        <dd><a href="/update">修改信息</a><span class="layui-badge-dot layui-bg-orange"></span></dd>
+        <dd><a href="/logout">退出登录</a><span class="layui-badge-dot"></span></dd>
+      </dl>
+    </li>
+    <li class="layui-nav-item"><a href="/admin">管理员</a></li>
+  </ul>
 
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">交通标志识别</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">主页</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/predict">图片预测</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="nav-item dropdown" style="position: relative; width: 100px;">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="true">
-                    <img src="/static/person-circle.svg" alt="logo" width="30" height="auto">
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/me">个人信息</a></li>
-                    <li><a class="dropdown-item" href="/update">修改信息</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="/logout" style="color: red;">退出登录</a></li>
-                </ul>
-            </div>
-        </div>
-
-    </nav>
-
-
-
-    <script src="/static/bootstrap-5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-    {% block content %}{% endblock %}
+  {% block content %}{% endblock %}
 </body>
-{% block js %}{% endblock %}
 
 </html>
+
+<script src="/static/layui/layui/layui.js"></script>
+<script>
+  layui.use(function () {
+    var element = layui.element;
+    element.render('nav');
+  });
+</script>
+{% block js %}{% endblock %}
