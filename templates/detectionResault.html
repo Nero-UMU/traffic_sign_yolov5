@@ -1,1 +1,44 @@
 {% extends "layout.html" %}
+
+{% block css %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> {% block title %} 交通标志识别 {% endblock %}</title>
+    <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+    <link href="/static/layui/layui/css/layui.css" rel="stylesheet">
+</head>
+{% endblock css %}
+
+{% block content %}
+
+<body style="position: relative; left:15%;top:20px;width:800px">
+
+    <table class="layui-table" lay-even>
+        <thead>
+            <tr>
+                <th lay-data="{field:'题目', width:150}">题目</th>
+                <th lay-data="{field:'用户回答', width:150}">用户回答</th>
+                <th lay-data="{field:'正确答案', minWidth: 180}">正确答案</th>
+                <th lay-data="{field:'答题情况', minWidth: 180}">答题情况</th>
+                <th lay-data="{field:'答题时间', minWidth: 180}">答题时间</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for resault in resault_list %}
+            <tr>
+                <td>这个图标代表什么？<img src="/static/{{ resault.question }}" style="width: 50px;"> </td>
+                <td>{{ resault.answer }}</td>
+                <td>{{ resault.correct }}</td>
+                <td>{% ifequal resault.correct_or_not "True" %}正确{% else %}错误{% endifequal %}</td>
+                <td>{{ resault.time }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
+{% endblock content %}

@@ -137,7 +137,7 @@ MEDIA_URL = '/media/'
 
 LANGUAGE_CODE = 'zh-hans'
 
-SIMPLEUI_LOGO = '/static/jju_logo.png'
+SIMPLEUI_LOGO = '/static/smiling-face-with-hearts.png'
 
 SIMPLEUI_HOME_INFO = False 
 SIMPLEUI_ANALYSIS = False 

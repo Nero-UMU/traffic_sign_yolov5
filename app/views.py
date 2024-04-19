@@ -289,9 +289,36 @@ class detectionResault(View):
         answer = select
         
         QuestionResult.objects.create(user=user,question=question,answer=answer,correct=correct,correct_or_not=correct_or_not)
-        return render(request, "detectionResault.html", locals())
+        return redirect('/detectionResault/')
     @method_decorator(check_login)
     def get(self, request):
+        uid = int(request.COOKIES.get('uid', -1))
+        username = User.objects.filter(id=uid)[0].name
+        user = User(id=uid)
+        
+        resault_list = []
+        questionObj = QuestionResult.objects.filter(user=user)
+        i = 0
+        for obj in questionObj:
+            # 题目
+            question = obj.question
+            # 用户回答
+            answer = obj.answer
+            # 正确答案
+            correct = obj.correct
+            # 答题情况
+            correct_or_not =  obj.correct_or_not
+            # 答题时间
+            time = obj.time
+            resault = {
+                'question':str(question.question),
+                'answer':answer,
+                'correct':correct,
+                'correct_or_not':str(correct_or_not),
+                'time':time,
+            }
+            resault_list.append(resault)
+        
         return render(request, "detectionResault.html", locals())
         
         

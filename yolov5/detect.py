@@ -201,6 +201,28 @@ def run(
                         save_path = str(Path(save_path).with_suffix('.mp4'))  # force *.mp4 suffix on results videos
                         vid_writer[i] = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     vid_writer[i].write(im0)
+                
+                # 尝试保存到json文件中
+                try:
+                    content_json = []
+                    file_name = save_path.split('/')
+                    content_dic = {
+                        "name": file_name[len(file_name) - 1],
+                        "category": (names[int(cls)]),
+                        "bbox": torch.tensor(xyxy).view(1, 4).view(-1).tolist(),
+                        "score": conf.tolist()
+                    }
+                    content_json.append(content_dic)
+                    # 将 json 数据写入文件
+                    with open(os.path.join(Path(save_dir), p.name + '.json'), 'w') as f:
+                        json.dump(content_json, f)
+                        
+                    filename = os.path.join(Path(save_dir), p.name + '.json')
+                    return filename
+                # 若未识别到任何物体，返回False
+                except:
+                    return False
+
 
         # Print time (inference-only)
         LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms")
@@ -214,26 +236,7 @@ def run(
     if update:
         strip_optimizer(weights[0])  # update model (to fix SourceChangeWarning)
     
-    # 尝试保存到json文件中
-    try:
-        content_json = []
-        file_name = save_path.split('/')
-        content_dic = {
-            "name": file_name[len(file_name) - 1],
-            "category": (names[int(cls)]),
-            "bbox": torch.tensor(xyxy).view(1, 4).view(-1).tolist(),
-            "score": conf.tolist()
-        }
-        content_json.append(content_dic)
-        # 将 json 数据写入文件
-        with open(os.path.join(Path(save_dir), p.name + '.json'), 'w') as f:
-            json.dump(content_json, f)
-            
-        filename = os.path.join(Path(save_dir), p.name + '.json')
-        return filename
-    # 若未识别到任何物体，返回False
-    except:
-        return False
+    
 
 
 
