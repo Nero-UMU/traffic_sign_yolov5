@@ -187,6 +187,27 @@ def run(
             if save_img:
                 if dataset.mode == 'image':
                     cv2.imwrite(save_path, im0)
+                    # 尝试保存到json文件中
+                    try:
+                        content_json = []
+                        file_name = save_path.split('/')
+                        content_dic = {
+                            "name": file_name[len(file_name) - 1],
+                            "category": (names[int(cls)]),
+                            "bbox": torch.tensor(xyxy).view(1, 4).view(-1).tolist(),
+                            "score": conf.tolist()
+                        }
+                        content_json.append(content_dic)
+                        # 将 json 数据写入文件
+                        with open(os.path.join(Path(save_dir), p.name + '.json'), 'w') as f:
+                            json.dump(content_json, f)
+                            
+                        filename = os.path.join(Path(save_dir), p.name + '.json')
+                        return filename
+                    # 若未识别到任何物体，返回False
+                    except:
+                        return False
+                    
                 else:  # 'video' or 'stream'
                     if vid_path[i] != save_path:  # new video
                         vid_path[i] = save_path
@@ -202,26 +223,7 @@ def run(
                         vid_writer[i] = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     vid_writer[i].write(im0)
                 
-                # 尝试保存到json文件中
-                try:
-                    content_json = []
-                    file_name = save_path.split('/')
-                    content_dic = {
-                        "name": file_name[len(file_name) - 1],
-                        "category": (names[int(cls)]),
-                        "bbox": torch.tensor(xyxy).view(1, 4).view(-1).tolist(),
-                        "score": conf.tolist()
-                    }
-                    content_json.append(content_dic)
-                    # 将 json 数据写入文件
-                    with open(os.path.join(Path(save_dir), p.name + '.json'), 'w') as f:
-                        json.dump(content_json, f)
-                        
-                    filename = os.path.join(Path(save_dir), p.name + '.json')
-                    return filename
-                # 若未识别到任何物体，返回False
-                except:
-                    return False
+                
 
 
         # Print time (inference-only)

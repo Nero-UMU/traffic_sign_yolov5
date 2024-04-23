@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> {% block title %} 交通标志识别 {% endblock %}</title>
+    <title> {% block title %} 测试结果查询 {% endblock %}</title>
     <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
     <link href="/static/layui/layui/css/layui.css" rel="stylesheet">
 </head>
@@ -29,7 +29,7 @@
         <tbody>
             {% for resault in resault_list %}
             <tr>
-                <td>这个图标代表什么？<img src="/static/{{ resault.question }}" style="width: 50px;"> </td>
+                <td>这个标志代表什么？<img src="/static/images/{{ resault.question }}" style="width: 50px;"> </td>
                 <td>{{ resault.answer }}</td>
                 <td>{{ resault.correct }}</td>
                 <td>{% ifequal resault.correct_or_not "True" %}正确{% else %}错误{% endifequal %}</td>

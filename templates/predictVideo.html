@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="layui-btn-container" style="margin-left: 300px; width: 800px; position:relative; top: 40px">
+    <button type="button" class="layui-btn demo-class-accept" lay-options="{accept: 'video'}" style="position: relative; left:75%;top:300px">
+        <i class="layui-icon layui-icon-upload"></i>
+        上传视频
+    </button>
+    <div class="layui-upload" style="width: 500px;">
+        <div style="width:500px; height :500px">
+            <video controls class="video-preview" id="videoPreview" height="500px" width="500px" type="video/mp4" hidden></video>
+        </div>
+        <div class="layui-progress layui-progress-big" lay-showPercent="yes" lay-filter="filter-demo"
+            style="width: 500px;">
+            <div class="layui-progress-bar" lay-percent=""></div>
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}
+{% block js%}
+<script>
+    layui.use(function () {
+        var upload = layui.upload;
+        var layer = layui.layer;
+        var element = layui.element;
+        var $ = layui.$;
+        // 渲染
+        upload.render({
+            elem: '.demo-class-accept', // 绑定多个元素
+            url: '{% url "predictVideo" %}', // 此处配置你自己的上传接口即可
+            accept: 'file', // 普通文件
+            before: function () {
+                element.progress('filter-demo', '0%'); // 进度条复位
+            },
+            progress: function (n, elem, e) {
+                element.progress('filter-demo', n + '%'); // 可配合 layui 进度条元素使用
+                if (n == 100) {
+                    layer.msg('上传完毕', { icon: 1 });
+                }
+            },
+            done: function (res) {
+                document.getElementById('videoPreview').removeAttribute('hidden');
+
+                document.getElementById('videoPreview').src=res.orignialVideo;
+            }
+        });
+    });
+
+</script>
+{% endblock %}

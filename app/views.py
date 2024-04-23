@@ -142,44 +142,56 @@ def predict_img_label(image_path):
     # 若未识别到物体，则返回False
     else:
         return False, False
-    
-    
-    
-class predict(View):
-    @method_decorator(check_login)
-    def get(self, request):
-        return render(request, 'predict.html', locals())
 
-    @method_decorator(check_login)
-    def post(self, request):
-        print("图片上传中...")
-        # 从前端获取文件
-        if request.FILES.get('file'):
-            file = request.FILES.get('file')
-            # 把文件放入项目的upload目录中
-            current_path = os.path.abspath(os.path.curdir)
-            filename = os.path.join(current_path,'static', 'upload', file.name)
-            
-            f = open(filename, 'wb')
-            for line in file.chunks():  # 分块接收上传的文件
-                f.write(line)
-            f.close()
-            
-            image_path = filename
-            result, filename = predict_img_label(image_path=image_path)
-            if (result == False):
-                return JsonResponse({'status':200,'msg':'操作失败',"result":None,"img":None} )
-            
-            with open(filename,"rb") as img_file:
-                # image_data = base64.b64encode(img_file.read()).decode('utf-8')
-                image_data = 'data:image/jpeg;base64,' + str(base64.b64encode(img_file.read()), 'utf-8')
-
-            result = result[0]
-            print(result)
-            return JsonResponse({'status':200,'msg':'操作成功',"result":result,"img":image_data} )
-
-        else:
-            return JsonResponse({'code': 200, 'msg': '上传失败'})
+def predict_video(video_path):
+    # 图片路径
+    video_path  = os.path.abspath(video_path)
+    print("视频路径为 "+video_path)
+    
+    # 当前路径
+    current_dir = os.path.abspath(os.path.curdir)
+    print("当前路径为 "+current_dir)
+    
+    # yolov5路径
+    yolo5_dir =  os.path.join(current_dir,"yolov5")
+    print("yolov5的路径为 "+yolo5_dir)
+    
+    result = {}
+    cmd = f'python3 {yolo5_dir}/detect.py --weights {yolo5_dir}/meiyanshi.engine --source {video_path} --device 0 --data {yolo5_dir}/data/meiganshi.yaml'
+    
+    os.system(cmd)
+    # 若识别到了物体，则继续进行
+    exps = os.listdir(os.path.join(yolo5_dir,"runs","detect"))
+        
+    calc = 0
+    for i in exps:
+        if len(i) > 3:
+            exps[calc] = int(i.replace("exp", ""))
+        calc += 1
+    
+    exps = [x for x in exps if isinstance(x, int)]
+    if len(exps) == 0:
+        exps = ""
+    else:
+        exps = str(max(exps))
+    print("exp"+exps)
+    
+    filename = video_path.split('/')[-1]
+    name = filename[:-4]
+    suffix = filename[-4:]
+    
+    processedVideo = os.path.join(yolo5_dir,"runs","detect",f"exp{exps}",filename)
+    # 移动处理后的视频到static下
+    os.system(f'mv {processedVideo} static/processedVideo/')
+    
+    # 将yolov5处理后的视频用ffmpeg处理为可有浏览器播放的h264格式
+    os.system(f'ffmpeg -i static/processedVideo/{filename} -c:v libx264 static/processedVideo/{name}-1{suffix}')
+    os.system(f'mv static/processedVideo/{name}-1{suffix} static/processedVideo/{filename}')
+    
+    detected_video_path = f'/static/processedVideo/{filename}'
+    print("检测后的视频位置 "+ detected_video_path)
+    return detected_video_path
+    
 
 class me(View):
     @method_decorator(check_login)
@@ -321,4 +333,56 @@ class detectionResault(View):
         
         return render(request, "detectionResault.html", locals())
         
+class predictPic(View):
+    @method_decorator(check_login)
+    def get(self, request):
+        return render(request, 'predictPic.html', locals())
+
+    @method_decorator(check_login)
+    def post(self, request):
+        print("图片上传中...")
+        # 从前端获取文件
+        if request.FILES.get('file'):
+            file = request.FILES.get('file')
+            # 把文件放入项目的upload目录中
+            current_path = os.path.abspath(os.path.curdir)
+            filename = os.path.join(current_path,'static', 'upload', file.name)
+            
+            f = open(filename, 'wb')
+            for line in file.chunks():  # 分块接收上传的文件
+                f.write(line)
+            f.close()
+            
+            image_path = filename
+            result, filename = predict_img_label(image_path=image_path)
+            if (result == False):
+                return JsonResponse({'status':200,'msg':'操作失败',"result":None,"img":None} )
+            
+            with open(filename,"rb") as img_file:
+                # image_data = base64.b64encode(img_file.read()).decode('utf-8')
+                image_data = 'data:image/jpeg;base64,' + str(base64.b64encode(img_file.read()), 'utf-8')
+
+            result = result[0]
+            print(result)
+            return JsonResponse({'status':200,'msg':'操作成功',"result":result,"img":image_data} )
+
+        else:
+            return JsonResponse({'code': 200, 'msg': '上传失败'})
         
+class predictVideo(View):
+    @method_decorator(check_login)
+    def get(self, request):
+        return render(request, 'predictVideo.html',locals())
+    
+    def post(self, request):
+        file = request.FILES.get('file')
+        current_path = os.path.abspath(os.path.curdir)
+        filename = os.path.join(current_path,'static', 'upload', file.name)
+        f = open(filename, 'wb')
+        for line in file.chunks():  # 分块接收上传的文件
+            f.write(line)
+        f.close()
+        orignialVideo =  os.path.join('/static', 'upload', file.name)
+        processedVideo = predict_video(filename)
+        
+        return JsonResponse({'code':200, 'msg':'success', 'orignialVideo': orignialVideo, 'processedVideo':processedVideo})
