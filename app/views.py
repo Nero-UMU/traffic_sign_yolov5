@@ -386,3 +386,5 @@ class predictVideo(View):
         processedVideo = predict_video(filename)
         
         return JsonResponse({'code':200, 'msg':'success', 'orignialVideo': orignialVideo, 'processedVideo':processedVideo})
+
+    
