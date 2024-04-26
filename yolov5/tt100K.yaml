@@ -1,0 +1,9 @@
+#path: /content/drive/MyDrive/TT100K/data
+path: ../yolov5/data/TT100K/
+train: train/images
+test: test/images
+val: val/images
+# Classes
+nc: 45  # number of classes
+names: ['pn', 'pne', 'i5', 'p11', 'pl40', 'po', 'pl50', 'io', 'pl80', 'pl60', 'p26', 'i4', 'pl100', 'pl30', 'il60', 'i2', 'pl5', 'w57', 'p5', 'p10', 'pl120', 'il80', 'ip', 'p23', 'pr40', 'ph4.5', 'w59', 'p3', 'w55', 'pm20', 'p12', 'pg', 'pl70', 'pm55', 'pl20', 'il100', 'w13', 'p19', 'p27', 'ph4', 'pm30', 'wo', 'ph5', 'w32', 'p6']
+  # class names
