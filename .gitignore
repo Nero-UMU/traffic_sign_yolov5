@@ -2,4 +2,7 @@
 venv
 
 /static/upload/*
+!/static/upload/.gitkeep
+
 /static/processedVideo/*
+!/static/processedVideo/.gitkeep
