@@ -113,7 +113,7 @@ def predict_img_label(image_path):
     print("yolov5的路径为 "+yolo5_dir)
     
     result = {}
-    cmd = f'python3 {yolo5_dir}/detect.py --weights {yolo5_dir}/meiyanshi.pt --source {image_path} --device cpu --data {yolo5_dir}/data/meiganshi.yaml'
+    cmd = f'python3 {yolo5_dir}/detect.py --weights {yolo5_dir}/runs/train/exp/weights/best.pt --source {image_path} --device cpu --data {yolo5_dir}/data/meiganshi.yaml'
     
     os.system(cmd)
     # 若识别到了物体，则继续进行
@@ -157,7 +157,7 @@ def predict_video(video_path):
     print("yolov5的路径为 "+yolo5_dir)
     
     result = {}
-    cmd = f'python3 {yolo5_dir}/detect.py --weights {yolo5_dir}/meiyanshi.pt --source {video_path} --device cpu --data {yolo5_dir}/data/meiganshi.yaml'
+    cmd = f'python3 {yolo5_dir}/detect.py --weights {yolo5_dir}/runs/train/exp/weights/best.pt --source {video_path} --device cpu --data {yolo5_dir}/data/meiganshi.yaml'
     
     os.system(cmd)
     # 若识别到了物体，则继续进行
