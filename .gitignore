@@ -1,0 +1,5 @@
+# virtual enviroment
+venv
+
+/static/upload/*
+/static/processed/*
