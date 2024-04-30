@@ -20,12 +20,12 @@ class QuestionBankAdmin(admin.ModelAdmin):
 
 @admin.register(QuestionResult)
 class QuestionResultAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'time', 'question', 'answer', 'correct', 'correct_or_not']
+    list_display = ['id', 'user', 'time', 'question', 'answer', 'correct', 'correct_or_not','questionID']
     search_fields = ['id', 'user']
 
 @admin.register(Car_plate_recognition)
 class Car_plate_recognitionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'plate_number', 'plate_color']
+    list_display = ['id', 'user', 'plate_number', 'plate_color','plate_img', 'time']
     search_fields = ['id', 'user']
 
 from django.contrib.auth.models import Group, User

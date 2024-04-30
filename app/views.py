@@ -8,9 +8,18 @@ from app.models import *
 from django.utils.decorators import method_decorator
 import hashlib
 import re
+import csv
 
 # Create your views here.
 
+# 导入题目
+def import_question_from_csv(csv_path):
+    with open(csv_path, 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        next(reader)  # 跳过标题行
+        for row in reader:
+            question, A, B,C,D,correct_answer = row
+            QuestionBank.objects.create(question=question, a=A, b=B, c=C, d=D, correct=correct_answer)
 
 def check_login(func):
     def wrapper(request):
@@ -92,12 +101,20 @@ class register(View):
         return render(request, 'register.html',locals())
 
 
+class index(View):
+    @method_decorator(check_login)
+    def get(self, request):
+        return render(request, 'index.html', locals())
 
+def processSign(sign):
+    if sign[0] == "p":
+        kind = "禁止标志"
+    elif sign[0] == "i":
+        kind = "指示标志"
+    elif sign[0] == "w":
+        kind = "警告标志"
+    return kind
 
-
-@check_login
-def index(request):
-    return render(request, 'index.html', locals())
 
 def predict_img_label(image_path):
     # 图片路径
@@ -330,6 +347,8 @@ class update(View):
         
         
 class detection(View):
+    # 导入题库
+    # import_question_from_csv('static/images/questionBank.csv')
     @method_decorator(check_login)
     def get(self, request):
         uid = int(request.COOKIES.get('uid', -1))
@@ -359,8 +378,9 @@ class detectionResault(View):
         # 用户回答
         answer = select
         
-        QuestionResult.objects.create(user=user,question=question,answer=answer,correct=correct,correct_or_not=correct_or_not)
+        QuestionResult.objects.create(user=user,question=question,answer=answer,correct=correct,correct_or_not=correct_or_not,questionID=int(questionId))
         return redirect('/detectionResault/')
+    
     @method_decorator(check_login)
     def get(self, request):
         uid = int(request.COOKIES.get('uid', -1))
@@ -369,7 +389,6 @@ class detectionResault(View):
         
         resault_list = []
         questionObj = QuestionResult.objects.filter(user=user)
-        i = 0
         for obj in questionObj:
             # 题目
             question = obj.question
@@ -381,16 +400,47 @@ class detectionResault(View):
             correct_or_not =  obj.correct_or_not
             # 答题时间
             time = obj.time
+            # 题目id
+            id = obj.questionID
             resault = {
                 'question':str(question.question),
                 'answer':answer,
                 'correct':correct,
                 'correct_or_not':str(correct_or_not),
                 'time':time,
+                'id': id,
             }
             resault_list.append(resault)
         
         return render(request, "detectionResault.html", locals())
+     
+class questionResearch(View):
+    @method_decorator(check_login)
+    def get(self, request):
+        questionID = request.GET.get('id')
+        print(questionID)
+        
+        if not QuestionBank.objects.filter(id=questionID):
+            return redirect('/detectionResault')
+        obj = QuestionBank.objects.filter(id=questionID)
+        
+        question = obj[0].question
+        a = obj[0].a
+        b = obj[0].b
+        c = obj[0].c
+        d = obj[0].d
+        correct = obj[0].correct
+        result = {
+            'id': questionID,
+            'question': question,
+            'a': a,
+            'b': b,
+            'c': c,
+            'd': d,
+            'correct': correct,
+        }
+        return render(request, "questionResearch.html", locals())
+     
         
 class predictPic(View):
     @method_decorator(check_login)
@@ -422,6 +472,7 @@ class predictPic(View):
                 image_data = 'data:image/jpeg;base64,' + str(base64.b64encode(img_file.read()), 'utf-8')
 
             result = result[0]
+            result['category'] = processSign(result['category'])
             print(result)
             return JsonResponse({'status':200,'msg':'操作成功',"result":result,"img":image_data} )
 
@@ -468,7 +519,9 @@ class car_plate_recognition(View):
         plate = result["result"].split(" ")
         plate_number = plate[0]
         plate_color = plate[1]
-        Car_plate_recognition.objects.create(user=User(id=1),plate_number=plate_number,plate_color=plate_color)
+        
+        plate_img = os.path.relpath(result["name"])
+        Car_plate_recognition.objects.create(user=User(id=1),plate_number=plate_number,plate_color=plate_color,plate_img=plate_img)
         return JsonResponse({'code':200, 'msg':'操作成功', 'result':result,'img':image_data})        
     
 class car_plate_recognition_video(View):
@@ -487,3 +540,30 @@ class car_plate_recognition_video(View):
         orignialVideo =  os.path.join('/static', 'upload', file.name)
         recognition_video = car_video_recognition(filename)
         return JsonResponse({'code':200, 'msg':'success', 'orignialVideo': orignialVideo, "recognition_video":recognition_video})
+
+class car_plate_recognition_result(View):
+    @method_decorator(check_login)
+    def get(self, request):
+        uid = int(request.COOKIES.get('uid', -1))
+        user = User(id=uid)
+        resault_list = []
+        car_recognition_Obj = Car_plate_recognition.objects.filter(user=user)
+
+        for obj in car_recognition_Obj:
+            # 车牌号
+            plate_number = obj.plate_number
+            # 车牌颜色
+            plate_color = obj.plate_color
+            # 车牌图片
+            plate_img = obj.plate_img
+            # 识别时间
+            time = obj.time
+            resault = {
+                "plate_color": plate_color,
+                "plate_number": plate_number,
+                "plate_img":"/" + plate_img,
+                "time": time,
+            }
+            resault_list.append(resault)
+        return render(request, "car_plate_recognition_result.html", locals())
+        

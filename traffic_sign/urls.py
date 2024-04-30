@@ -25,12 +25,14 @@ urlpatterns = [
     path('login/', views.login,name="login"),
     path('logout/',views.logout,name='logout'),
     path('register/',views.register.as_view(),name='logout'),
-    path('',views.index,name='index'),
+    path('',views.index.as_view(),name='index'),
     path('favicon.ico/', RedirectView.as_view(url='/static/favicon.ico')),
     path('me/', views.me.as_view(), name='me'),
     path('update/', views.update.as_view(), name='update'),
     path('detection/', views.detection.as_view(), name='detection'),
     path('detectionResault/', views.detectionResault.as_view(), name="detectionResault"),
+    path("questionResearch/", views.questionResearch.as_view(), name="`questionResearch`"),
     path('car_plate_recognition/', views.car_plate_recognition.as_view(), name="car_plate_recognition"),
-    path('car_plate_recognition_video/', views.car_plate_recognition_video.as_view(), name="car_plate_recognition_video")
+    path('car_plate_recognition_video/', views.car_plate_recognition_video.as_view(), name="car_plate_recognition_video"),
+    path('car_plate_recognition_result/',views.car_plate_recognition_result.as_view(),name="car_plate_recognition_result"),
 ]

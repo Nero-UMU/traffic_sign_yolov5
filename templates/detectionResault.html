@@ -13,11 +13,12 @@
 
 {% block content %}
 
-<body style="position: relative; left:15%;top:20px;width:800px">
+<body style="position: relative; left:15%;top:20px;width:1000px">
 
     <table class="layui-table" lay-even>
         <thead>
             <tr>
+                <th lay-data="{field:'题目id', minWidth: 180}">题目id(点击题号可查询题目)</th>
                 <th lay-data="{field:'题目', width:150}">题目</th>
                 <th lay-data="{field:'用户回答', width:150}">用户回答</th>
                 <th lay-data="{field:'正确答案', minWidth: 180}">正确答案</th>
@@ -29,6 +30,7 @@
         <tbody>
             {% for resault in resault_list %}
             <tr>
+                <td style="font-size: 20px"><a href="/questionResearch/?id={{ resault.id }}">{{ resault.id }}</a></td>
                 <td>这个标志代表什么？<img src="/static/images/{{ resault.question }}" style="width: 50px;"> </td>
                 <td>{{ resault.answer }}</td>
                 <td>{{ resault.correct }}</td>

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block css %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> {% block title %} 测试结果查询 {% endblock %}</title>
+    <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+    <link href="/static/layui/layui/css/layui.css" rel="stylesheet">
+</head>
+{% endblock css %}
+
+{% block content %}
+
+<body style="position: relative; left:15%;top:20px;width:800px">
+
+    <table class="layui-table" lay-even>
+        <thead>
+            <tr>
+                <th lay-data="{field:'车牌号', width:150}">车牌号</th>
+                <th lay-data="{field:'车牌颜色', width:150}">车牌颜色</th>
+                <th lay-data="{field:'车牌图片', width:150}">车牌图片</th>
+                <th lay-data="{field:'识别时间', width:150}">识别时间</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for resault in resault_list %}
+            <tr>
+                <td>{{ resault.plate_number }}</td>
+                <td>{{ resault.plate_color }}</td>
+                <td><img src='{{ resault.plate_img }}' style="width: 100px;"></td>
+                <td>{{ resault.time }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
+{% endblock content %}

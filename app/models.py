@@ -59,6 +59,7 @@ class QuestionResult(models.Model):
     id = models.AutoField(primary_key=True)
     user  = models.ForeignKey(User,verbose_name='用户',on_delete=models.CASCADE, default=None)
     question = models.ForeignKey(QuestionBank , verbose_name='题目', on_delete=models.CASCADE)
+    questionID = models.IntegerField(verbose_name='题目ID',default=0)
     answer = models.CharField(max_length=4,verbose_name='用户回答', choices=correct_CHOICE, default=1)
     correct = models.CharField(max_length=4,verbose_name='正确答案', choices=correct_CHOICE, default=1)
     correct_or_not = models.BooleanField(default=1, choices=isCorrect, verbose_name="答题情况")
@@ -72,10 +73,12 @@ class QuestionResult(models.Model):
 class Car_plate_recognition(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE, default=None)
-    plate_number = models.CharField(max_length=128, verbose_name='车牌号')
-    plate_color = models.CharField(max_length=128, verbose_name='车牌颜色')
+    plate_number = models.CharField(max_length=128, verbose_name='车牌号', default='')
+    plate_color = models.CharField(max_length=128, verbose_name='车牌颜色', default='')
+    plate_img = models.CharField(max_length=128, verbose_name='车牌图片', default='')
+    time = models.DateField(auto_now_add=True, verbose_name='识别时间')
     class Meta:
         verbose_name = '车牌识别结果'  # 定义在管理后台显示的名称
         verbose_name_plural = verbose_name  # 定义复数时的名称（去除复数的s）
-        ordering = ['id']  # 排序
+        ordering = ['time']  # 排序
         

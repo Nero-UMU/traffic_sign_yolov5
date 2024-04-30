@@ -1,0 +1,42 @@
+{% extends "layout.html" %} {% block css%}
+<title>{% block title %} 题目查询 {% endblock %}</title>
+{% endblock css %}
+
+{% block content %}
+<form style="position: relative; left:20%; top: 40px;width: 800px;">
+    <blockquote class="layui-elem-quote" style="font-size:30px;">
+        题目查询
+    </blockquote>
+    <div class="layui-panel" style=" word-wrap: break-word;">
+        <div style="padding: 32px; height:5px;font-size:22px;">题目ID:{{result.id}}<br></div>
+        <div style="padding: 32px; height:5px;font-size:22px;">这个标志代表什么？<br></div>
+        <div style="padding: 32px; height:200px;font-size:32px;"><img src="/static/images/{{question}}" width="100px"></div>
+    </div>
+    <table class="layui-table" lay-size="lg">
+        <colgroup>
+          <col width="150">
+          <col width="150">
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+            <th>正确答案</th>
+          </tr> 
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{result.a}}</td>
+            <td>{{result.b}}</td>
+            <td>{{result.c}}</td>
+            <td>{{result.d}}</td>
+            <td>{{result.correct}}</td>
+          </tr>
+        </tbody>
+      
+      </table>
+</form>
+{% endblock content%}
