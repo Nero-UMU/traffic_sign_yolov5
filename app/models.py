@@ -67,3 +67,15 @@ class QuestionResult(models.Model):
         verbose_name = '答题结果'  # 定义在管理后台显示的名称
         verbose_name_plural = verbose_name  # 定义复数时的名称（去除复数的s）
         ordering = ['time']  # 排序
+
+# 车牌识别结果
+class Car_plate_recognition(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE, default=None)
+    plate_number = models.CharField(max_length=128, verbose_name='车牌号')
+    plate_color = models.CharField(max_length=128, verbose_name='车牌颜色')
+    class Meta:
+        verbose_name = '车牌识别结果'  # 定义在管理后台显示的名称
+        verbose_name_plural = verbose_name  # 定义复数时的名称（去除复数的s）
+        ordering = ['id']  # 排序
+        

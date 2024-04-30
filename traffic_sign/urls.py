@@ -30,5 +30,7 @@ urlpatterns = [
     path('me/', views.me.as_view(), name='me'),
     path('update/', views.update.as_view(), name='update'),
     path('detection/', views.detection.as_view(), name='detection'),
-    path('detectionResault/', views.detectionResault.as_view(), name="detectionResault")
+    path('detectionResault/', views.detectionResault.as_view(), name="detectionResault"),
+    path('car_plate_recognition/', views.car_plate_recognition.as_view(), name="car_plate_recognition"),
+    path('car_plate_recognition_video/', views.car_plate_recognition_video.as_view(), name="car_plate_recognition_video")
 ]

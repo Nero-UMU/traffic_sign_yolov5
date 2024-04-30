@@ -1,0 +1,148 @@
+{% extends "layout.html" %} {% block css%}
+<title>{% block title %} 车辆视频识别 {% endblock %}</title>
+{% endblock css%} {% block content %}
+<div
+  class="layui-btn-container"
+  style="margin-left: 250px; width: 800px; position: relative; top: 40px"
+>
+  <button
+    type="button"
+    class="layui-btn demo-class-accept"
+    lay-options="{accept: 'video'}"
+    lay-on="load"
+  >
+    <i class="layui-icon layui-icon-upload"></i>
+    上传视频
+  </button>
+  <div class="layui-upload" style="width: 500px">
+    <div
+      style="font-size: larger; width: 200px; position: relative; left: 170%"
+      id="downloadButton"
+      hidden
+    >
+      下载处理后的视频
+      <a href="" download id="downloadVideo"
+        ><i
+          class="layui-icon layui-icon-download-circle"
+          style="font-size: 30px; color: #228b22"
+        ></i
+      ></a>
+    </div>
+    <div style="width: 500px; height: 500px; border: 3px solid green">
+      <video
+        controls
+        class="video-preview"
+        id="videoPreview"
+        height="500px"
+        width="500px"
+        type="video/mp4"
+        hidden
+      ></video>
+    </div>
+    <div
+      class="layui-progress layui-progress-big"
+      lay-showPercent="yes"
+      lay-filter="filter-demo"
+      style="width: 500px"
+    >
+      <div class="layui-progress-bar" lay-percent=""></div>
+    </div>
+    <div
+      style="
+        width: 500px;
+        height: 500px;
+        position: relative;
+        left: 120%;
+        bottom: 520px;
+        border: 3px solid yellow;
+      "
+    >
+      <video
+        controls
+        height="500px"
+        width="500px"
+        type="video/mp4"
+        id="recognition_video"
+        hidden
+      ></video>
+    </div>
+  </div>
+
+  <div
+    class="layui-panel"
+    style="
+      position: relative;
+      left: 150px;
+      bottom: 500px;
+      width: 150px;
+      font-size: large;
+    "
+  >
+    <div style="padding: 32px">原视频</div>
+  </div>
+  <div
+    class="layui-panel"
+    style="
+      position: relative;
+      left: 800px;
+      bottom: 600px;
+      width: 150px;
+      font-size: large;
+    "
+  >
+    <div style="padding: 32px">识别结果</div>
+  </div>
+</div>
+
+{% endblock content%} {% block js%}
+<script>
+  layui.use(function () {
+    var upload = layui.upload;
+    var layer = layui.layer;
+    var element = layui.element;
+    var $ = layui.$;
+    // 渲染
+    upload.render({
+      elem: ".demo-class-accept", // 绑定多个元素
+      url: '{% url "car_plate_recognition_video" %}', // 此处配置你自己的上传接口即可
+      accept: "file", // 普通文件
+      before: function () {
+        element.progress("filter-demo", "0%"); // 进度条复位
+      },
+      progress: function (n, elem, e) {
+        element.progress("filter-demo", n + "%"); // 可配合 layui 进度条元素使用
+        if (n == 100) {
+          layer.msg("上传完毕", { icon: 1 });
+        }
+      },
+      done: function (res) {
+        document.getElementById("videoPreview").removeAttribute("hidden");
+
+        document.getElementById("videoPreview").src = res.orignialVideo;
+
+        document.getElementById("recognition_video").removeAttribute("hidden");
+
+        document.getElementById("recognition_video").src = res.recognition_video;
+
+        document.getElementById("downloadVideo").href = res.recognition_video;
+
+        document.getElementById("downloadButton").removeAttribute("hidden");
+      },
+    });
+  });
+</script>
+<script>
+  layui.use(function () {
+    var layer = layui.layer;
+    var util = layui.util;
+    util.on("lay-on", {
+      load: function () {
+        var index = layer.load(0, { shade: false });
+        setTimeout(function () {
+          layer.close(index); // 关闭 loading
+        }, 30000);
+      },
+    });
+  });
+</script>
+{% endblock %}

@@ -6,3 +6,6 @@ venv
 
 /static/processedVideo/*
 !/static/processedVideo/.gitkeep
+
+/static/recognitionResult/*
+!/static/recognitionResult/.gitkeep

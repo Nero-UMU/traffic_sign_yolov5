@@ -147,4 +147,5 @@ SIMPLEUI_ICON = {
     '题库': 'fa-solid fa-question',
     '交通标志识别系统管理': 'fa-brands fa-app-store-ios',
     '答题结果': 'fa-solid fa-check',
+    '车牌识别结果': 'fa-solid fa-vector-square',
 }

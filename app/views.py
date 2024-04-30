@@ -143,8 +143,36 @@ def predict_img_label(image_path):
     else:
         return False, False
 
-def predict_video(video_path):
+def car_img_recognition(image_path):
     # 图片路径
+    image_path  = os.path.abspath(image_path)
+    print("图片路径为 "+image_path)
+    
+    # 当前路径
+    current_dir = os.path.abspath(os.path.curdir)
+    print("当前路径为 "+current_dir)
+    
+    # Car_recognition路径
+    Car_recognition_dir =  os.path.join(current_dir,"Car_recognition")
+    print("Car_recognition的路径为 "+ Car_recognition_dir)
+    
+    os.chdir(Car_recognition_dir)
+    cmd = f'python3 Car_recognition.py --detect_model weights/detect.pt --rec_model weights/plate_rec_color.pth --image_path {image_path} --output {current_dir}/static/recognitionResult'
+    os.system(cmd)
+    os.chdir(current_dir)
+    filename = image_path.split('/')[-1]
+    json_path = os.path.join(current_dir,"static/recognitionResult",f"{filename}.json")
+    if os.path.exists(json_path):
+        result = json.load(open(json_path,"r"))
+        # 返回Json文件和识别后的文件路径
+        print("识别后的文件路径为 "+ json_path[:-5])
+        return result, json_path[:-5]
+    # 若未识别到物体，则返回False
+    else:
+        return False, False
+    
+def predict_video(video_path):
+    # 视频路径
     video_path  = os.path.abspath(video_path)
     print("视频路径为 "+video_path)
     
@@ -156,7 +184,6 @@ def predict_video(video_path):
     yolo5_dir =  os.path.join(current_dir,"yolov5")
     print("yolov5的路径为 "+yolo5_dir)
     
-    result = {}
     cmd = f'python3 {yolo5_dir}/detect.py --weights {yolo5_dir}/runs/train/exp/weights/best.pt --source {video_path} --device cpu --data {yolo5_dir}/data/meiganshi.yaml'
     
     os.system(cmd)
@@ -185,12 +212,44 @@ def predict_video(video_path):
     os.system(f'mv {processedVideo} static/processedVideo/')
     
     # 将yolov5处理后的视频用ffmpeg处理为可有浏览器播放的h264格式
-    os.system(f'ffmpeg -i static/processedVideo/{filename} -c:v libx264 static/processedVideo/{name}-1{suffix}')
+    os.system(f'ffmpeg -y -i static/processedVideo/{filename} -c:v libx264 static/processedVideo/{name}-1{suffix}')
     os.system(f'mv static/processedVideo/{name}-1{suffix} static/processedVideo/{filename}')
     
     detected_video_path = f'/static/processedVideo/{filename}'
     print("检测后的视频位置 "+ detected_video_path)
     return detected_video_path
+    
+def car_video_recognition(video_path):
+    # 视频路径
+    video_path  = os.path.abspath(video_path)
+    print("视频路径为 "+video_path)
+    
+    # 当前路径
+    current_dir = os.path.abspath(os.path.curdir)
+    print("当前路径为 "+current_dir)
+    
+    # Car_recognition路径
+    Car_recognition_dir =  os.path.join(current_dir,"Car_recognition")
+    print("Car_recognition的路径为 "+ Car_recognition_dir)
+    
+    os.chdir(Car_recognition_dir)
+    cmd = f'python3 Car_recognition.py --detect_model weights/detect.pt --rec_model weights/plate_rec_color.pth --video {video_path} --output {current_dir}/static/recognitionResult'
+    os.system(cmd)
+    os.chdir(current_dir)
+    
+    filename = video_path.split('/')[-1]
+    name = filename[:-4]
+    suffix = filename[-4:]
+    
+    recognitionVideo = os.path.join(current_dir,"static/recognitionResult",f"{filename}_result.mp4")
+    # 将处理后的视频用ffmpeg处理为可有浏览器播放的h264格式
+    os.system(f'ffmpeg -y -i static/recognitionResult/{filename}_result.mp4 -c:v libx264 static/recognitionResult/{name}{suffix}')
+    os.system(f'rm static/recognitionResult/{filename}_result.mp4')
+    
+    recognition_video_path = f'/static/recognitionResult/{filename}'
+    print("检测后的视频位置 "+ recognition_video_path)
+    return recognition_video_path
+   
     
 
 class me(View):
@@ -387,4 +446,44 @@ class predictVideo(View):
         
         return JsonResponse({'code':200, 'msg':'success', 'orignialVideo': orignialVideo, 'processedVideo':processedVideo})
 
+class car_plate_recognition(View):
+    @method_decorator(check_login)
+    def get(self, request):
+        return render(request, 'car_plate_recognition.html', locals())
+    def post(self, request):
+        file = request.FILES.get('file')
+        current_path = os.path.abspath(os.path.curdir)
+        filename = os.path.join(current_path,'static', 'upload', file.name)
+        f = open(filename, 'wb')
+        for line in file.chunks():  # 分块接收上传的文件
+            f.write(line)
+        f.close()
+        result, filename = car_img_recognition(filename)
+        filename = os.path.relpath(filename)
+        result = result[0]
+        print(result)
+        with open(filename,"rb") as f:
+            image_data = 'data:image/jpeg;base64,' + str(base64.b64encode(f.read()), 'utf-8')
+        
+        plate = result["result"].split(" ")
+        plate_number = plate[0]
+        plate_color = plate[1]
+        Car_plate_recognition.objects.create(user=User(id=1),plate_number=plate_number,plate_color=plate_color)
+        return JsonResponse({'code':200, 'msg':'操作成功', 'result':result,'img':image_data})        
     
+class car_plate_recognition_video(View):
+    @method_decorator(check_login)
+    def get(self, request):
+        return render(request, 'car_plate_recognition_video.html', locals())
+    
+    def post(self, request):
+        file = request.FILES.get('file')
+        current_path = os.path.abspath(os.path.curdir)
+        filename = os.path.join(current_path,'static', 'upload', file.name)
+        f = open(filename, 'wb')
+        for line in file.chunks():  # 分块接收上传的文件
+            f.write(line)
+        f.close()
+        orignialVideo =  os.path.join('/static', 'upload', file.name)
+        recognition_video = car_video_recognition(filename)
+        return JsonResponse({'code':200, 'msg':'success', 'orignialVideo': orignialVideo, "recognition_video":recognition_video})
