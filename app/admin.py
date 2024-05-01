@@ -2,9 +2,9 @@ from django.contrib import admin
 from app.models import *
 
 # admin.py
-admin.site.site_header = '交通标志识别管理系统'  # 登录显示
-admin.site.site_title = '交通标志识别管理系统'  # title
-admin.site.index_title = '交通标志识别管理系统' 
+admin.site.site_header = '交通图片识别管理系统'  # 登录显示
+admin.site.site_title = '交通图片识别管理系统'  # title
+admin.site.index_title = '交通图片识别管理系统' 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
