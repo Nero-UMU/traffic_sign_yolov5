@@ -1,61 +1,372 @@
-{% extends "layout.html" %} {% block content%}
 <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.108.0" />
+    <title>欢迎回来</title>
 
-<body style="position: relative; left: 15%; top: 20px; width: 1200px">
-  <div class="layui-carousel" id="ID-carousel-demo-1">
-    <div carousel-item>
-      <div>
-        <img width="100%" height="100%" src="static/lake-5756911_1920.jpg" />
-      </div>
+    <link
+      href="/static/bootstrap-5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="/static/layui/layui/css/layui.css" rel="stylesheet" />
 
-      <div>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, 0.1);
+        border: solid rgba(0, 0, 0, 0.15);
+        border-width: 1px 0;
+        box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1),
+          inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -0.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/heroes.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main>
+      <div class="px-4 py-5 my-5 text-center">
         <img
-          width="100%"
-          height="100%"
-          src="static/landscape-5538015_1920.jpg"
+          class="d-block mx-auto mb-4"
+          src="/static/smiling-face-with-hearts.png"
+          alt=""
+          width="72"
+          height="72"
         />
+        <h1 class="display-5 fw-bold">欢迎回来</h1>
+        <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4">用户名:{{ result.name }}</p>
+          <p class="lead mb-4">邮箱:{{result.email}}</p>
+          <p class="lead mb-4">电话号码:{{ result.tel }}</p>
+          <p class="lead mb-4">个性签名:{{ result.words }}</p>
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="/me"
+              ><button type="button" class="btn btn-primary btn-lg px-4 gap-3">
+                查看个人信息
+              </button></a
+            >
+            <a href="/update"
+              ><button
+                type="button"
+                class="btn btn-outline-secondary btn-lg px-4"
+              >
+                修改个人信息
+              </button></a
+            >
+          </div>
+        </div>
       </div>
 
-      <div>
-        <img
-          width="100%"
-          height="100%"
-          src="static/mountains-1113547_1920.jpg"
-        />
+      <div class="b-example-divider"></div>
+
+      <div class="container col-xxl-8 px-4 py-5">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+          <div class="col-10 col-sm-8 col-lg-6">
+            <img
+              src="/static/Screenshot_1.png"
+              class="d-block mx-lg-auto img-fluid"
+              alt="example1"
+              width="700"
+              height="500"
+              loading="lazy"
+            />
+          </div>
+          <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">交通标志识别</h1>
+            <p class="lead">
+              上传包含交通标志的图片或者视频，稍等片刻，计算机会通过机器学习算法识别出其中的交通标志。
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+              <a href="/predictPic"
+                ><button
+                  type="button"
+                  class="btn btn-primary btn-lg px-4 me-md-2"
+                >
+                  图片识别
+                </button></a
+              >
+              <a href="/predictVideo"
+                ><button
+                  type="button"
+                  class="btn btn-outline-secondary btn-lg px-4"
+                >
+                  视频识别
+                </button></a
+              >
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div>
-        <img
-          width="100%"
-          height="100%"
-          src="static/mountains-8391433_1920.jpg"
-        />
+      <div class="b-example-divider"></div>
+
+      <div class="px-4 pt-5 my-5 text-center border-bottom">
+        <h1 class="display-4 fw-bold">交通标志测试</h1>
+        <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4">
+            结合测试题库，测试交通标志识别能力，提高个人交通技能。
+          </p>
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+            <a href="/detection"
+              ><button
+                type="button"
+                class="btn btn-primary btn-lg px-4 me-sm-3"
+              >
+                测试入口
+              </button></a
+            >
+            <a href="/detectionResault"
+              ><button
+                type="button"
+                class="btn btn-outline-secondary btn-lg px-4"
+              >
+                结果查询
+              </button></a
+            >
+          </div>
+        </div>
+        <div class="overflow-hidden" style="max-height: 50vh">
+          <div class="container px-5">
+            <img
+              src="/static/Screenshot_3.png"
+              class="img-fluid border rounded-3 shadow-lg mb-4"
+              alt="Example image"
+              width="700"
+              height="500"
+              loading="lazy"
+            />
+          </div>
+        </div>
       </div>
 
-      <div>
-        <img width="100%" height="100%" src="static/tree-736888_1920.jpg" />
+      <div class="b-example-divider"></div>
+
+      <div class="container col-xxl-8 px-4 py-5">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+          <div class="col-10 col-sm-8 col-lg-6">
+            <img
+              src="/static/Screenshot_2.png"
+              class="d-block mx-lg-auto img-fluid"
+              alt="exapmle2"
+              width="700"
+              height="500"
+              loading="lazy"
+            />
+          </div>
+          <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">车辆识别</h1>
+            <p class="lead">
+              上传车辆的图片或者视频，稍等片刻，计算机会通过机器学习算法识别出其车牌号及该车辆的其他信息。
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+              <a href="/car_plate_recognition"
+                ><button
+                  type="button"
+                  class="btn btn-primary btn-lg px-4 me-md-2"
+                >
+                  图片识别
+                </button></a
+              >
+              <a href="/car_plate_recognition_result"
+                ><button
+                  type="button"
+                  class="btn btn-outline-secondary btn-lg px-4"
+                >
+                  结果查询
+                </button></a
+              >
+              <a href="/car_plate_recognition_video"
+                ><button
+                  type="button"
+                  class="btn btn-outline-secondary btn-lg px-4"
+                >
+                  视频识别
+                </button></a
+              >
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div>
-        <img width="100%" height="100%" src="static/norway-4970081_1920.jpg" />
-      </div>
-    </div>
-  </div>
-</body>
+      <div class="b-example-divider"></div>
 
-{% endblock%} {% block js %}
+      <div class="container my-5">
+        <div
+          class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg"
+        >
+          <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+            <h1 class="display-4 fw-bold lh-1">后台管理</h1>
+            <p class="lead">
+              进入后台，管理用户信息，题库，识别结果等各项信息。
+            </p>
+            <div
+              class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3"
+            >
+              <a href="/admin"
+                ><button
+                  type="button"
+                  class="btn btn-primary btn-lg px-4 me-md-2 fw-bold"
+                >
+                  管理员
+                </button></a
+              >
+              <a href="/logout"
+                ><button type="button" class="btn btn-danger btn-lg px-4">
+                  注销当前账户
+                </button></a
+              >
+            </div>
+          </div>
+          <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+            <img
+              class="rounded-lg-3"
+              src="/static/Screenshot_4.png"
+              alt=""
+              width="720"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="b-example-divider"></div>
+
+      <div class="bg-dark text-secondary px-4 py-5 text-center">
+        <div class="py-5">
+          <h1 class="display-5 fw-bold text-white">关于本项目</h1>
+          <div class="col-lg-6 mx-auto">
+            <p class="fs-5 mb-4">
+              本项目是一个基于Python的web应用，用于识别交通标志和车辆信息。web应用使用了Django框架。前端使用了Layui模块化的Web
+              UI
+              组件库，和Bootstrap框架。后台管理使用了simpleui进行美化。识别算法使用了YOLO(You
+              Only Look
+              Once)算法，是一种基于深度神经网络的对象识别和定位算法，其优点是速度快，准确率较高，缺点是精度较低。
+            </p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+              <a href="https://www.python.org/"
+                ><button
+                  type="button"
+                  class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"
+                >
+                  Python
+                </button></a
+              >
+              <a href="https://github.com/ultralytics/yolov5"
+                ><button
+                  type="button"
+                  class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"
+                >
+                  YOLOv5
+                </button></a
+              >
+              <a href="https://www.djangoproject.com/"
+                ><button
+                  type="button"
+                  class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"
+                >
+                  Django
+                </button></a
+              >
+              <a href="https://layui.dev/"
+                ><button
+                  type="button"
+                  class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"
+                >
+                  Layui
+                </button></a
+              >
+              <a href="https://www.bootcss.com/"
+                ><button
+                  type="button"
+                  class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"
+                >
+                  Bootstrap
+                </button></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="b-example-divider mb-0"></div>
+    </main>
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
+
+<script src="/static/layui/layui/layui.js"></script>
 <script>
   layui.use(function () {
-    var carousel = layui.carousel;
-
-    // 渲染 - 图片轮播
-    carousel.render({
-      elem: "#ID-carousel-demo-1",
-      width: "1200px",
-      height: "360px",
-      interval: 3000,
-      indicator: "inside",
+    var util = layui.util;
+    // 自定义固定条
+    util.fixbar({
+      on: {
+        // 任意事件 --  v2.8.0 新增
+        mouseenter: function (type) {
+          layer.tips(type, this, {
+            tips: 4,
+            fixed: true,
+          });
+        },
+        mouseleave: function (type) {
+          layer.closeAll("tips");
+        },
+      },
+      // 点击事件
+      click: function (type) {
+        console.log(this, type);
+      },
     });
   });
 </script>
-{% endblock js %}

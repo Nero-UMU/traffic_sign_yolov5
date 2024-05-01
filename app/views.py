@@ -104,6 +104,22 @@ class register(View):
 class index(View):
     @method_decorator(check_login)
     def get(self, request):
+        obj = User.objects.filter(id=request.COOKIES.get('uid'))[0]
+        name = obj.name
+        tel = obj.tel
+        gender = obj.gender
+        address = obj.address
+        email = obj.email
+        words = obj.words
+        
+        result = {
+            "name": name,
+            "tel": tel,
+            "gender": gender,
+            "address": address,
+            "email": email,
+            "words": words
+        }
         return render(request, 'index.html', locals())
 
 def processSign(sign):
