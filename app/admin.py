@@ -13,19 +13,29 @@ class UserAdmin(admin.ModelAdmin):
     # search_fields用于设置搜索栏中要搜索的不同字段,如有外键应使用双下划线连接两个模型的字段
     search_fields = ['id', 'name', 'tel', 'email']
 
-@admin.register(QuestionBank)
-class QuestionBankAdmin(admin.ModelAdmin):
-    list_display = ['id', 'question', 'a', 'b', 'c', 'd', 'correct']
-    search_fields = ['id', 'question']
+# @admin.register(QuestionBank)
+# class QuestionBankAdmin(admin.ModelAdmin):
+#     list_display = ['id', 'question', 'a', 'b', 'c', 'd', 'correct']
+#     search_fields = ['id', 'question']
 
-@admin.register(QuestionResult)
-class QuestionResultAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'time', 'question', 'answer', 'correct', 'correct_or_not','questionID']
-    search_fields = ['id', 'user']
+# @admin.register(QuestionResult)
+# class QuestionResultAdmin(admin.ModelAdmin):
+#     list_display = ['id', 'user', 'time', 'question', 'answer', 'correct', 'correct_or_not','questionID']
+#     search_fields = ['id', 'user']
 
 @admin.register(Car_plate_recognition)
 class Car_plate_recognitionAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'plate_number', 'plate_color','plate_img', 'time']
+    search_fields = ['id', 'user']
+    
+@admin.register(Traffic_sign)
+class Traffic_signAdmin(admin.ModelAdmin):
+    list_display = ['id', 'sign_name', 'sign_img', 'sign_description']
+    search_fields = ['id', 'sign_name']
+
+@admin.register(traffic_predict_result)
+class traffic_predict_resultAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'sign_name', 'time']
     search_fields = ['id', 'user']
 
 from django.contrib.auth.models import Group, User

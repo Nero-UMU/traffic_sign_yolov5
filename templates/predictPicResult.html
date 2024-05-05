@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<body style="position: relative; left:15%;top:20px;width:800px">
+
+    <table class="layui-table" lay-even>
+        <thead>
+            <tr>
+                <th lay-data="{field:'车牌颜色', width:150}">标志名称</th>
+                <th lay-data="{field:'识别时间', width:150}">识别时间</th>
+                <th lay-data="{field:'车牌图片', width:150}">标志详情</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for resault in resault_list %}
+            <tr>
+                <td>{{ resault.sign_name }}</td>
+                <td>{{ resault.time }}</td>
+                <td><a href="/trafficSignResearch/?name={{resault.sign_name}}">标志详情</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+{% endblock content%}

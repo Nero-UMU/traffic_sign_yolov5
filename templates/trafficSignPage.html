@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<body style="position: relative; left:25%;top:20px;width:1000px">
+<table class="layui-table" lay-even lay-size="lg">
+    <colgroup>
+        <col width="150">
+        <col width="150">
+        <col>
+      </colgroup>
+      <thead>
+        <tr>
+          <th>交通标志图片</th>
+          <th>交通标志名称</th>
+          <th>图片描述</th>
+          <th>查看详情</th>
+        </tr> 
+      </thead>
+      <tbody>
+        {% for result in result_list %}
+        <tr>
+          <td><img src="/static/images/{{result.sign_img}}"></td>
+          <td>{{result.sign_name}}</td>
+          <td>{{result.sign_description}}</td>
+          <td style="font-size: 30px"><a href="/trafficSignResearch/?name={{result.sign_name}}">查看</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+</table >
+</body>
+{% endblock content %}

@@ -12,14 +12,35 @@ import csv
 
 # Create your views here.
 
+
+def label_replace(list):
+    all_name = ['禁止车辆临时或长时停放', '禁止驶入', '靠右侧道路行驶', '禁止鸣喇叭', '限制速度40', 'po', '限制速度50', '出入口', '限制速度80',
+                '限制速度60', '禁止载货汽车驶入', '机动车行驶', '限制速度100', '限制速度30', '最低限速60', '非机动车行驶', '限制速度5',
+                '注意行人', ' 禁止掉头', ' 禁止机动车驶入', '限制速度120', '最低限速80', '人行横道', '禁止向左转弯', ' 解除限制速度40', '限制高度4.5m',
+                '合流', '禁止大型客车驶入', '注意儿童', '限制质量20T', '禁止二轮摩托车驶入', '减速让行', '限制速度70', ' 限制质量55T', '限制速度20', '最低限速100', '十字交叉',
+                '禁止向右转弯', '禁止运输危险物品车辆驶入', '限制高度4m', '限制质量30T', 'wo', '限制高度5m', '施工', '禁止非机动车进入']
+    result_list = []
+    for i in list:
+        result_list.append(all_name[int(i)])
+    return result_list
+    
 # 导入题目
 def import_question_from_csv(csv_path):
     with open(csv_path, 'r', encoding='utf-8') as file:
         reader = csv.reader(file)
         next(reader)  # 跳过标题行
         for row in reader:
-            question, A, B,C,D,correct_answer = row
+            question, A, B, C, D,correct_answer = row
             QuestionBank.objects.create(question=question, a=A, b=B, c=C, d=D, correct=correct_answer)
+
+# 导入交通标志信息
+def import_traffic_sign_from_csv(csv_path):
+    with open(csv_path, 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        next(reader)  # 跳过标题行
+        for row in reader:
+            sign_name, sign_img, sign_description = row
+            Traffic_sign.objects.create(sign_name=sign_name, sign_img=sign_img, sign_description=sign_description)
 
 def check_login(func):
     def wrapper(request):
@@ -104,6 +125,7 @@ class register(View):
 class index(View):
     @method_decorator(check_login)
     def get(self, request):
+        # import_traffic_sign_from_csv('static/images/trafficSign.csv')
         obj = User.objects.filter(id=request.COOKIES.get('uid'))[0]
         name = obj.name
         tel = obj.tel
@@ -123,6 +145,11 @@ class index(View):
         return render(request, 'index.html', locals())
 
 def processSign(sign):
+    all_name = ['pn', 'pne', 'i5', 'p11', 'pl40', 'po', 'pl50', 'io', 'pl80',
+                'pl60', 'p26', 'i4', 'pl100', 'pl30', 'il60', 'i2', 'pl5',
+                'w57', 'p5', 'p10', 'pl120', 'il80', 'ip', 'p23', 'pr40', 'ph4.5',
+                'w59', 'p3', 'w55', 'pm20', 'p12', 'pg', 'pl70', 'pm55', 'pl20', 'il100', 'w13',
+                'p19', 'p27', 'ph4', 'pm30', 'wo', 'ph5', 'w32', 'p6']
     if sign[0] == "p":
         kind = "禁止标志"
     elif sign[0] == "i":
@@ -146,7 +173,7 @@ def predict_img_label(image_path):
     print("yolov5的路径为 "+yolo5_dir)
     
     result = {}
-    cmd = f'python3 {yolo5_dir}/detect.py --weights {yolo5_dir}/runs/train/exp/weights/best.pt --source {image_path} --device cpu --data {yolo5_dir}/data/meiganshi.yaml'
+    cmd = f'python3 {yolo5_dir}/detect.py --weights {yolo5_dir}/runs/train/exp/weights/best.pt --source {image_path} --device cpu --save-txt --hide-labels'
     
     os.system(cmd)
     # 若识别到了物体，则继续进行
@@ -166,12 +193,19 @@ def predict_img_label(image_path):
     print("exp"+exps)
     
     filename = image_path.split('/')[-1]
-    filename = os.path.join(yolo5_dir,"runs","detect",f"exp{exps}",f"{filename}.json")
+    filename = filename[:-4]
+
+    file_path = os.path.join(yolo5_dir,"runs","detect",f"exp{exps}", image_path.split('/')[-1])
+    filename = os.path.join(yolo5_dir,"runs","detect",f"exp{exps}","labels",f"{filename}.txt")
+    
     if os.path.exists(filename):
-        result = json.load(open(filename,"r"))
-        # 返回Json文件和识别后的文件路径
-        print("识别后的文件路径为 "+filename[:-5])
-        return result, filename[:-5]
+        file = open(filename, "r")
+        file_list = file.readlines()
+        
+        result_list = []
+        for i in file_list:
+            result_list.append(i.split(" ")[0])
+        return result_list, file_path
     # 若未识别到物体，则返回False
     else:
         return False, False
@@ -217,7 +251,7 @@ def predict_video(video_path):
     yolo5_dir =  os.path.join(current_dir,"yolov5")
     print("yolov5的路径为 "+yolo5_dir)
     
-    cmd = f'python3 {yolo5_dir}/detect.py --weights {yolo5_dir}/runs/train/exp/weights/best.pt --source {video_path} --device cpu --data {yolo5_dir}/data/meiganshi.yaml'
+    cmd = f'python3 {yolo5_dir}/detect.py --weights {yolo5_dir}/runs/train/exp/weights/best.pt --source {video_path} --device cpu'
     
     os.system(cmd)
     # 若识别到了物体，则继续进行
@@ -487,10 +521,16 @@ class predictPic(View):
                 # image_data = base64.b64encode(img_file.read()).decode('utf-8')
                 image_data = 'data:image/jpeg;base64,' + str(base64.b64encode(img_file.read()), 'utf-8')
 
-            result = result[0]
-            result['category'] = processSign(result['category'])
+            
+            result = label_replace(result)
+            
+            for i in result:
+                user = User(id=int(request.COOKIES.get('uid', -1)))
+                sign_name = i
+                traffic_predict_result.objects.create(user=user,sign_name=sign_name)
+            
             print(result)
-            return JsonResponse({'status':200,'msg':'操作成功',"result":result,"img":image_data} )
+            return JsonResponse({'status':200,'msg':'操作成功',"result":result,"img":image_data})
 
         else:
             return JsonResponse({'code': 200, 'msg': '上传失败'})
@@ -509,9 +549,30 @@ class predictVideo(View):
             f.write(line)
         f.close()
         orignialVideo =  os.path.join('/static', 'upload', file.name)
+        os.system(f'ffmpeg -y -i {current_path}{orignialVideo} -c:v libx264 {current_path}{orignialVideo}.mp4')
+        os.system(f'mv {current_path}{orignialVideo}.mp4 {current_path}{orignialVideo}')
         processedVideo = predict_video(filename)
         
         return JsonResponse({'code':200, 'msg':'success', 'orignialVideo': orignialVideo, 'processedVideo':processedVideo})
+
+class predictPicResult(View):
+    @method_decorator(check_login)
+    def get(self, request):
+        uid = int(request.COOKIES.get('uid', -1))
+        user = User(id=uid)
+        result_Obj = traffic_predict_result.objects.filter(user=user)
+
+        resault_list = []
+        for obj in result_Obj:
+            sign_name = obj.sign_name
+            time = obj.time
+            resault = {
+                'sign_name':sign_name,
+                'time':time,
+            }
+            
+            resault_list.append(resault)
+        return render(request, 'predictPicResult.html', locals())
 
 class car_plate_recognition(View):
     @method_decorator(check_login)
@@ -553,6 +614,10 @@ class car_plate_recognition_video(View):
         for line in file.chunks():  # 分块接收上传的文件
             f.write(line)
         f.close()
+        
+        os.system(f'ffmpeg -y -i {filename} -c:v libx264 {filename}.mp4')
+        os.system(f'mv {filename}.mp4 {filename}')
+
         orignialVideo =  os.path.join('/static', 'upload', file.name)
         recognition_video = car_video_recognition(filename)
         return JsonResponse({'code':200, 'msg':'success', 'orignialVideo': orignialVideo, "recognition_video":recognition_video})
@@ -583,3 +648,40 @@ class car_plate_recognition_result(View):
             resault_list.append(resault)
         return render(request, "car_plate_recognition_result.html", locals())
         
+class trafficSignResearch(View):
+    @method_decorator(check_login)
+    def get(self, request):
+        sign_name = request.GET.get('name')
+        if not Traffic_sign.objects.filter(sign_name=sign_name):
+            return redirect('/trafficSignResearchError/')
+        obj = Traffic_sign.objects.filter(sign_name=sign_name)[0]
+        sign_name = obj.sign_name
+        sign_img = obj.sign_img
+        sign_description = obj.sign_description
+        result = {
+            "sign_name": sign_name,
+            "sign_img":  sign_img,
+            "sign_description": sign_description,
+        }
+        return render(request, 'trafficSignResearch.html', locals())
+    
+class trafficSignResearchError(View):
+    def get(self, request):
+        return render(request, 'trafficSignResearchError.html', locals())
+
+class trafficSignPage(View):
+    def get(self,request):
+        sign_all = [i.id for i in Traffic_sign.objects.all()]
+        result_list = []
+        for i in sign_all:
+            obj = Traffic_sign.objects.filter(id=i)[0]
+            sign_name = obj.sign_name
+            sign_img = obj.sign_img
+            sign_description = obj.sign_description
+            result = {
+                "sign_name": sign_name,
+                "sign_img":  sign_img,
+                "sign_description": sign_description,
+            }
+            result_list.append(result)
+        return render(request, 'trafficSignPage.html', locals())

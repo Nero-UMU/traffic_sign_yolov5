@@ -1,0 +1,42 @@
+{% extends "layout.html" %} {% block content %}
+<form style="position: relative; left: 20%; top: 40px; width: 800px">
+  <blockquote class="layui-elem-quote" style="font-size: 30px">
+    交通标志查询
+  </blockquote>
+  <div class="layui-panel" style="word-wrap: break-word">
+    <div style="padding: 32px; height: 5px; font-size: 22px">
+      标志图案<br />
+    </div>
+    <div style="padding: 32px; height: 100px; font-size: 32px">
+      <img src="/static/images/{{result.sign_img}}" width="100px" />
+    </div>
+  </div>
+  <div class="layui-panel">
+    <div style="padding: 32px; font-size: 22px">
+      标志名称：{{result.sign_name}}
+    </div>
+  </div>
+  <div class="layui-panel">
+    <div style="padding: 32px; font-size: 22px">
+      标志描述：{{result.sign_description}}
+    </div>
+  </div>
+  <div class="layui-panel">
+    <div style="padding: 32px; font-size: 22px">
+      <a href="https://www.baidu.com/s?wd={{result.sign_name}}"
+        >百度搜索链接→→→<img style="height: 100px" src="/static/baiduLogo.png"
+      /></a>
+    </div>
+    <div style="padding: 32px; font-size: 22px">
+      <a href="https://www.bing.com/search?q={{result.sign_name}}"
+        >必应搜索链接→→→<img style="height: 100px" src="/static/bingLogo.png"
+      /></a>
+    </div>
+    <div style="padding: 32px; font-size: 22px">
+      <a href="https://www.google.com/search?&q={{result.sign_name}}"
+        >谷歌搜索链接→→→<img style="height: 100px" src="/static/googleLogo.png"
+      /></a>
+    </div>
+  </div>
+</form>
+{% endblock content %}

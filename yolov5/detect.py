@@ -199,7 +199,7 @@ def run(
                         }
                         content_json.append(content_dic)
                         # 将 json 数据写入文件
-                        with open(os.path.join(Path(save_dir), p.name + '.json'), 'w') as f:
+                        with open(os.path.join(Path(save_dir), p.name + '.json'), 'w',encoding='utf-8') as f:
                             json.dump(content_json, f)
                             
                         filename = os.path.join(Path(save_dir), p.name + '.json')

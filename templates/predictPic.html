@@ -46,7 +46,7 @@
       </div>
 
       <div>
-        <span id="result" style="font-size: large"></span>
+        <span id="result" style="font-size: large">识别结果</span>
         <br />
         <img style="width: 600px; height: 600px" id="img" src="" alt="" />
       </div>
@@ -83,9 +83,14 @@
         if (res.code == 0) {
           return layer.msg("上传失败");
         } else {
-          $("#result").text("识别结果为" + res.result.category);
+          let html = '识别结果（点击链接可查询）：';
+          for (let i = 0; i < res.result.length; i++) {
+            html += "<a href=/trafficSignResearch/?name=" + res.result[i] + ">" + res.result[i] + "</a> ";
+          }
+          $("#result").html(html);
+          
           $("#img").attr("src", res.img);
-          return layer.msg("您预测的结果为" + res.result.category);
+          return layer.msg("您预测的结果为 " + res.result);
         }
         // 上传成功的一些操作
         // …

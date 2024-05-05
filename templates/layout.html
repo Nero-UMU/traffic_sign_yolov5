@@ -18,6 +18,7 @@
       <a href="javascript:;">标志识别</a>
       <dl class="layui-nav-child">
         <dd><a href="/predictPic">图片识别</a><span class="layui-badge-dot layui-bg-blue"></span></dd>
+        <dd><a href="/predictPicResult">图片识别结果查询</a><span class="layui-badge-dot layui-bg-gray"></span></dd>
         <dd><a href="/predictVideo">视频识别</a><span class="layui-badge-dot layui-bg-green"></span></dd>
       </dl>
     </li>
@@ -28,14 +29,21 @@
         <dd><a href="/car_plate_recognition_result">图片识别结果查询</a><span class="layui-badge-dot layui-bg-cyan"></span></dd>
         <dd><a href="/car_plate_recognition_video">视频识别</a><span class="layui-badge-dot layui-bg-purple"></span></dd>
       </dl>
-    </li>
-    <li class="layui-nav-item layui-nav-itemed">
+      <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;">交通标志图片</a>
+        <dl class="layui-nav-child">
+        <dd><a href="/trafficSignPage">交通标志图片查看</a><span class="layui-badge-dot layui-bg-green"></span></dd>
+         
+        </dl>
+      </li>
+    {% comment %} </li>
+     <li class="layui-nav-item layui-nav-itemed">
       <a href="javascript:;">交通标志测试</a>
       <dl class="layui-nav-child">
         <dd><a href="/detection">测试入口</a><span class="layui-badge-dot layui-bg-green"></span></dd>
         <dd><a href="/detectionResault">测试结果查询</a><span class="layui-badge-dot layui-bg-gray"></span></dd>
       </dl>
-    </li>
+    </li>  {% endcomment %}
     <li class="layui-nav-item">
       <a href="javascript:;">用户管理</a>
       <dl class="layui-nav-child">
@@ -44,6 +52,7 @@
         <dd><a href="/logout">退出登录</a><span class="layui-badge-dot"></span></dd>
       </dl>
     </li>
+    
     <li class="layui-nav-item"><a href="/admin">管理员</a></li>
   </ul>
 

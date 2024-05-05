@@ -21,7 +21,11 @@ from django.views.generic.base import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('predictPic/', views.predictPic.as_view(), name="predict"),
+    path('predictPicResult/',views.predictPicResult.as_view(),name="predictPicResult"),
     path('predictVideo/', views.predictVideo.as_view(), name="predictVideo"),
+    path('trafficSignResearch/', views.trafficSignResearch.as_view(), name="trafficSignResearch"),
+    path('trafficSignResearchError/', views.trafficSignResearchError.as_view(), name="trafficSignResearchError"),
+    path('trafficSignPage/',views.trafficSignPage.as_view(),name="trafficSignPage"),
     path('login/', views.login.as_view(),name="login"),
     path('logout/',views.logout,name='logout'),
     path('register/',views.register.as_view(),name='logout'),

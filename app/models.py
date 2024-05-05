@@ -82,3 +82,24 @@ class Car_plate_recognition(models.Model):
         verbose_name_plural = verbose_name  # 定义复数时的名称（去除复数的s）
         ordering = ['time']  # 排序
         
+# 交通标志
+class Traffic_sign(models.Model):
+    id = models.AutoField(primary_key=True)
+    sign_name = models.CharField(max_length=128, verbose_name='标志名称', default='')
+    sign_img = models.CharField(max_length=128, verbose_name='标志图片', default='')
+    sign_description = models.CharField(max_length=128, verbose_name='标志描述', default='')
+    class Meta:
+        verbose_name = "交通标志"  # 定义在管理后台显示的名称
+        verbose_name_plural = verbose_name  # 定义复数时的名称（去除复数的s）
+        ordering = ['id']  # 排序
+
+# 交通标志识别结果
+class traffic_predict_result(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE, default=None)
+    sign_name = models.CharField(max_length=128, verbose_name='标志名称', default='')
+    time = models.DateField(auto_now_add=True, verbose_name='识别时间')
+    class meta:
+        verbose_name = '交通标志识别结果'  # 定义在管理后台显示的名称
+        verbose_name_plural = verbose_name  # 定义复数时的名称（去除复数的s）
+        ordering = ['time']  # 排序
