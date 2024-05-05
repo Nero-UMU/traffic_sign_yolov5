@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('predictPic/', views.predictPic.as_view(), name="predict"),
     path('predictVideo/', views.predictVideo.as_view(), name="predictVideo"),
-    path('login/', views.login,name="login"),
+    path('login/', views.login.as_view(),name="login"),
     path('logout/',views.logout,name='logout'),
     path('register/',views.register.as_view(),name='logout'),
     path('',views.index.as_view(),name='index'),

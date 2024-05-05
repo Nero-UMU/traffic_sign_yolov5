@@ -31,8 +31,8 @@ def check_login(func):
     return wrapper
 
 # 登录
-def login(request):
-    if request.method == "POST":
+class login(View):
+    def post(self, request):
         name = request.POST.get('name')
         pwd = request.POST.get('pwd')
         
@@ -47,7 +47,7 @@ def login(request):
         else:
             msg = "用户信息错误，请重新输入！！"
             return render(request, 'login.html', {"msg":msg})
-    else:
+    def get(self, request):
         uid = int(request.COOKIES.get('uid', -1))
         if uid != -1:
             return redirect('/')
