@@ -678,7 +678,6 @@ class trafficSignResearch(View):
                 "time": time,
             }
             comment_list.append(comment)
-        print(comment_list)
         
         return render(request, 'trafficSignResearch.html', locals())
     
