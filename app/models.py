@@ -114,3 +114,15 @@ class traffic_sign_research_history(models.Model):
         verbose_name = '交通标志查询历史'
         verbose_name_plural = verbose_name
         ordering = ['-time']
+        
+# 交通标志评论
+class traffic_sign_comment(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name='评论用户', default=None)
+    sign_name = models.CharField(max_length=128, verbose_name='标志名称', default='')
+    comment = models.CharField(max_length=128,verbose_name='评论内容', default='')
+    time = models.DateTimeField(auto_now_add=True, verbose_name='评论时间')
+    class Meta:
+        verbose_name = '交通标志评论'
+        verbose_name_plural = verbose_name
+        ordering = ['-time']

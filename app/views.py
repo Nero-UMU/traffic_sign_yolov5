@@ -666,7 +666,30 @@ class trafficSignResearch(View):
             "sign_description": sign_description,
         }
 
+        comment_obj = traffic_sign_comment.objects.filter(sign_name=sign_name)
+        comment_list = []
+        for obj in comment_obj:
+            user = obj.user
+            comment = obj.comment
+            time = obj.time
+            comment = {
+                "user": user,
+                "comment": comment,
+                "time": time,
+            }
+            comment_list.append(comment)
+        print(comment_list)
+        
         return render(request, 'trafficSignResearch.html', locals())
+    
+    def post(self, request):
+        sign_name = request.POST.get('sign_name')
+        comment = request.POST.get('comment')
+        uid = int(request.COOKIES.get('uid', -1))
+        user = User(id=uid)
+        traffic_sign_comment.objects.create(user=user, sign_name=sign_name, comment=comment)
+        
+        return redirect(f'/trafficSignResearch/?name={sign_name}')
     
 class trafficSignResearchError(View):
     def get(self, request):
@@ -689,7 +712,14 @@ class trafficSignPage(View):
                 "sign_description": sign_description,
             }
             result_list.append(result)
+        random.shuffle(result_list)
         return render(request, 'trafficSignPage.html', locals())
+    
+    def post(self,request):
+        search = request.POST.get('search')
+        
+        # return render(request, 'trafficSignResearchHistory.html', locals())
+        return redirect(f'/trafficSignResearch/?name={search}')
     
 class trafficSignResearchHistory(View):
     def get(self,request):
@@ -706,8 +736,3 @@ class trafficSignResearchHistory(View):
             }
             result_list.append(result)
         return render(request, 'trafficSignResearchHistory.html', locals())
-    def post(self,request):
-        search = request.POST.get('search')
-        
-        # return render(request, 'trafficSignResearchHistory.html', locals())
-        return redirect(f'/trafficSignResearch/?name={search}')

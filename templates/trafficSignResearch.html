@@ -1,7 +1,7 @@
 {% extends "layout.html" %} 
 {% block title %} 交通标志查询  {% endblock %}
 {% block content %}
-<form style="position: relative; left: 20%; top: 40px; width: 800px">
+<form style="position: relative; left: 20%; top: 40px; width: 700px">
   <blockquote class="layui-elem-quote" style="font-size: 30px">
     交通标志查询
   </blockquote>
@@ -41,4 +41,25 @@
     </div>
   </div>
 </form>
+<form class="layui-form" action="/trafficSignResearch/" method="post" style="position: absolute; right: 50px; top:50px; width:500px;">
+  <div class="layui-form-item layui-form-text">
+    <input name='sign_name' value='{{result.sign_name}}' type="hidden">
+    <div class="layui-input-block">
+      <textarea name='comment' placeholder="评论这个标志" class="layui-textarea"></textarea>
+    </div>
+  </div>
+    <button class="layui-btn" lay-submit lay-filter="formDemo" style="position: absolute; right: 0px;">
+      添加评论
+    </button>
+    <br>
+    <br>
+    <br>
+    {% for comment in comment_list %}
+      <div class="layui-panel" style="width:390px;left:110px">
+        <div style="padding: 32px;font-size: 22px">{{ comment.user.name }}：{{ comment.comment }}</div>
+        <div style="padding: 12px;">{{ comment.time }} 评论了这个标志</div>
+      </div>
+    {% endfor %}
+<form>
+
 {% endblock content %}

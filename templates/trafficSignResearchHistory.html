@@ -1,24 +1,6 @@
 {% extends "layout.html" %} {% block title %} 交通标志图片查询历史 {% endblock%}
 {% block content %}
 <body style="position: relative; left: 25%; top: 20px; width: 1000px">
-  <form class="layui-form" action="/trafficSignResearchHistory/" method="post">
-    <div class="layui-form-item">
-      <div class="layui-input-group" style="font-size: 20px">
-        <div class="layui-input-prefix">搜索标志图片</div>
-        <input type="text" placeholder="搜索标志图片" class="layui-input" name="search" style="width: 500px"/>
-        <div
-          class="layui-input-split layui-input-suffix"
-          style="cursor: pointer"
-        >
-          <button type="submit" class="layui-btn layui-btn-primary"><i class="layui-icon layui-icon-search"></i></button>
-        </div>
-      </div>
-    </div>
-</form>
-
-  <br />
-  <br />
-  <br />
   <div class="layui-panel">
     <div style="padding: 32px; font-size: 32px">交通标志查询历史</div>
   </div>
@@ -27,12 +9,14 @@
     <colgroup>
       <col width="150" />
       <col width="150" />
+      <col width="150" />
       <col />
     </colgroup>
     <thead>
       <tr>
         <th>查询历史</th>
         <th>查询时间</th>
+        <th>查询入口</th>
       </tr>
     </thead>
     <tbody>
@@ -40,6 +24,12 @@
       <tr>
         <td>{{result.search_history}}</td>
         <td>{{result.time}}</td>
+        <td>
+          <a href="https://www.baidu.com/s?wd={{result.search_history}}"><i style="font-size: 30px" class="layui-icon layui-icon-firefox"></i></a>
+          <a href="https://www.bing.com/search?q={{result.search_history}}"><i style="font-size: 30px" class="layui-icon layui-icon-edge"></i></a>
+          <a href="https://www.google.com/search?q={{result.search_history}}"><i style="font-size: 30px" class="layui-icon layui-icon-chrome"></i></a>
+          <a href="/trafficSignResearch/?name={{result.search_history}}"<i style="font-size: 30px" class="layui-icon layui-icon-search"></i></a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

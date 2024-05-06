@@ -151,4 +151,5 @@ SIMPLEUI_ICON = {
     '交通标志': 'fa-solid fa-flag',
     '交通标志识别结果': 'fa-solid fa-magnifying-glass',
     '交通标志查询历史': 'fa-solid fa-clock-rotate-left',
+    '交通标志评论': 'fa-solid fa-comments',
 }
