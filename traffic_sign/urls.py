@@ -26,6 +26,7 @@ urlpatterns = [
     path('trafficSignResearch/', views.trafficSignResearch.as_view(), name="trafficSignResearch"),
     path('trafficSignResearchError/', views.trafficSignResearchError.as_view(), name="trafficSignResearchError"),
     path('trafficSignPage/',views.trafficSignPage.as_view(),name="trafficSignPage"),
+    path('trafficSignResearchHistory/',views.trafficSignResearchHistory.as_view(),name="trafficSignResearchHistory"),
     path('login/', views.login.as_view(),name="login"),
     path('logout/',views.logout,name='logout'),
     path('register/',views.register.as_view(),name='logout'),

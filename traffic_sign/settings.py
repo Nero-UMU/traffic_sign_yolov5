@@ -149,4 +149,6 @@ SIMPLEUI_ICON = {
     '答题结果': 'fa-solid fa-check',
     '车牌识别结果': 'fa-solid fa-vector-square',
     '交通标志': 'fa-solid fa-flag',
+    '交通标志识别结果': 'fa-solid fa-magnifying-glass',
+    '交通标志查询历史': 'fa-solid fa-clock-rotate-left',
 }

@@ -99,7 +99,18 @@ class traffic_predict_result(models.Model):
     user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE, default=None)
     sign_name = models.CharField(max_length=128, verbose_name='标志名称', default='')
     time = models.DateField(auto_now_add=True, verbose_name='识别时间')
-    class meta:
+    class Meta:
         verbose_name = '交通标志识别结果'  # 定义在管理后台显示的名称
         verbose_name_plural = verbose_name  # 定义复数时的名称（去除复数的s）
         ordering = ['time']  # 排序
+        
+# 交通标志查询历史
+class traffic_sign_research_history(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name='查询用户', default=None)
+    search_history = models.CharField(max_length=128, verbose_name='查询历史',default='')
+    time = models.DateTimeField(auto_now_add=True, verbose_name='查询时间')
+    class Meta:
+        verbose_name = '交通标志查询历史'
+        verbose_name_plural = verbose_name
+        ordering = ['-time']

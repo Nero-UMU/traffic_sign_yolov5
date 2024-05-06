@@ -16,8 +16,8 @@ import csv
 def label_replace(list):
     all_name = ['禁止车辆临时或长时停放', '禁止驶入', '靠右侧道路行驶', '禁止鸣喇叭', '限制速度40', 'po', '限制速度50', '出入口', '限制速度80',
                 '限制速度60', '禁止载货汽车驶入', '机动车行驶', '限制速度100', '限制速度30', '最低限速60', '非机动车行驶', '限制速度5',
-                '注意行人', ' 禁止掉头', ' 禁止机动车驶入', '限制速度120', '最低限速80', '人行横道', '禁止向左转弯', ' 解除限制速度40', '限制高度4.5m',
-                '合流', '禁止大型客车驶入', '注意儿童', '限制质量20T', '禁止二轮摩托车驶入', '减速让行', '限制速度70', ' 限制质量55T', '限制速度20', '最低限速100', '十字交叉',
+                '注意行人', '禁止掉头', '禁止机动车驶入', '限制速度120', '最低限速80', '人行横道', '禁止向左转弯', '解除限制速度40', '限制高度4.5m',
+                '合流', '禁止大型客车驶入', '注意儿童', '限制质量20T', '禁止二轮摩托车驶入', '减速让行', '限制速度70', '限制质量55T', '限制速度20', '最低限速100', '十字交叉',
                 '禁止向右转弯', '禁止运输危险物品车辆驶入', '限制高度4m', '限制质量30T', 'wo', '限制高度5m', '施工', '禁止非机动车进入']
     result_list = []
     for i in list:
@@ -651,9 +651,11 @@ class car_plate_recognition_result(View):
 class trafficSignResearch(View):
     @method_decorator(check_login)
     def get(self, request):
+        uid = int(request.COOKIES.get('uid', -1))
         sign_name = request.GET.get('name')
+        traffic_sign_research_history.objects.create(user=User(id=uid), search_history=sign_name)
         if not Traffic_sign.objects.filter(sign_name=sign_name):
-            return redirect('/trafficSignResearchError/')
+            return redirect(f'/trafficSignResearchError/?name={sign_name}')
         obj = Traffic_sign.objects.filter(sign_name=sign_name)[0]
         sign_name = obj.sign_name
         sign_img = obj.sign_img
@@ -663,13 +665,16 @@ class trafficSignResearch(View):
             "sign_img":  sign_img,
             "sign_description": sign_description,
         }
+
         return render(request, 'trafficSignResearch.html', locals())
     
 class trafficSignResearchError(View):
     def get(self, request):
+        sign_name = request.GET.get('name')
         return render(request, 'trafficSignResearchError.html', locals())
 
 class trafficSignPage(View):
+    @method_decorator(check_login)
     def get(self,request):
         sign_all = [i.id for i in Traffic_sign.objects.all()]
         result_list = []
@@ -685,3 +690,24 @@ class trafficSignPage(View):
             }
             result_list.append(result)
         return render(request, 'trafficSignPage.html', locals())
+    
+class trafficSignResearchHistory(View):
+    def get(self,request):
+        uid = int(request.COOKIES.get('uid', -1))
+
+        obj_all = traffic_sign_research_history.objects.filter(user=User(id=uid))
+        result_list = []
+        for obj in obj_all:
+            search_history =  obj.search_history
+            time = obj.time
+            result = {
+                'search_history': search_history,
+                'time': time,
+            }
+            result_list.append(result)
+        return render(request, 'trafficSignResearchHistory.html', locals())
+    def post(self,request):
+        search = request.POST.get('search')
+        
+        # return render(request, 'trafficSignResearchHistory.html', locals())
+        return redirect(f'/trafficSignResearch/?name={search}')

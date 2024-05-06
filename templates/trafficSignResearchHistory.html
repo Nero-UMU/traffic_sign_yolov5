@@ -1,0 +1,48 @@
+{% extends "layout.html" %} {% block title %} 交通标志图片查询历史 {% endblock%}
+{% block content %}
+<body style="position: relative; left: 25%; top: 20px; width: 1000px">
+  <form class="layui-form" action="/trafficSignResearchHistory/" method="post">
+    <div class="layui-form-item">
+      <div class="layui-input-group" style="font-size: 20px">
+        <div class="layui-input-prefix">搜索标志图片</div>
+        <input type="text" placeholder="搜索标志图片" class="layui-input" name="search" style="width: 500px"/>
+        <div
+          class="layui-input-split layui-input-suffix"
+          style="cursor: pointer"
+        >
+          <button type="submit" class="layui-btn layui-btn-primary"><i class="layui-icon layui-icon-search"></i></button>
+        </div>
+      </div>
+    </div>
+</form>
+
+  <br />
+  <br />
+  <br />
+  <div class="layui-panel">
+    <div style="padding: 32px; font-size: 32px">交通标志查询历史</div>
+  </div>
+
+  <table class="layui-table" lay-even lay-size="lg">
+    <colgroup>
+      <col width="150" />
+      <col width="150" />
+      <col />
+    </colgroup>
+    <thead>
+      <tr>
+        <th>查询历史</th>
+        <th>查询时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in result_list %}
+      <tr>
+        <td>{{result.search_history}}</td>
+        <td>{{result.time}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+{% endblock %}

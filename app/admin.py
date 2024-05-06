@@ -38,6 +38,11 @@ class traffic_predict_resultAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'sign_name', 'time']
     search_fields = ['id', 'user']
 
+@admin.register(traffic_sign_research_history)
+class traffic_sign_research_historyAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'search_history', 'time']
+    search_fields = ['id', 'user']
+
 from django.contrib.auth.models import Group, User
 admin.site.unregister(Group)
 admin.site.unregister(User)
